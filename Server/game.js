@@ -8,6 +8,7 @@ exports.init = function (sio, socket) {
         message: "You are connected!"
     });
     gameSocket.on('create', hostCreateNewGame);
+    gameSocket.on('leave',leaveRoom);
     gameSocket.on('join', playerJoinGame);
     gameSocket.on('write', (data)=>{
         console.log(data);
@@ -15,22 +16,26 @@ exports.init = function (sio, socket) {
 }
 
 function hostCreateNewGame() {
-    let id = (Math.random() * 100000);
-
-    this.emit('created', id.toString());
+    //let id = (Math.random() * 100000);
+    let id = 1;
     this.join(id.toString());
-    console.log(gameSocket.rooms);
+    this.emit('created', id.toString());
+    console.log(io.sockets.adapter.rooms);
+}
+
+function leaveRoom(room){
+    this.leave(room);
 }
 
 function playerJoinGame(id) {
     try {
-        console.log(id);
-        console.log(gameSocket.rooms);
-        let room = gameSocket.rooms[id];
+        
+        let room = io.sockets.adapter.rooms[id.toString()];
 
         if (room) {
             this.join(id);
             io.sockets.in(id).emit('joined', id);
+            console.log(io.sockets.adapter.rooms);
         } else {
             this.emit('error', {
                 message: "This room does not exist."
