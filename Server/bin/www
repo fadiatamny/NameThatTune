@@ -1,0 +1,17 @@
+const app = require("../app");
+const http = require("http");
+const socketio = require('socket.io');
+const game = require('../controllers/gameController');
+
+let port = process.env.PORT || 1337;
+app.set('port',port);
+
+let server = http.createServer(app);
+server.listen(app.get('port'), ()=>{
+    console.log(`Server Listening on port ${port}`);
+});
+
+let io = socketio.listen(server);
+io.sockets.on('connection', function(socket) {
+    game.init(io, socket);
+});

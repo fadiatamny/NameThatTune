@@ -1,7 +1,9 @@
+const uniqid = require('uniqid');
+
 let io;
 let gameSocket;
 
-exports.init = function (sio, socket) {
+module.exports.init = function (sio, socket) {
     io = sio;
     gameSocket = socket;
     gameSocket.emit('connected', {
@@ -13,14 +15,15 @@ exports.init = function (sio, socket) {
     gameSocket.on('write', (data)=>{
         console.log(data);
     });
+    gameSocket.on('startGame',startGame);
+    gameSocket.on('songRequest',songRequest);
 }
 
 function hostCreateNewGame() {
-    //let id = (Math.random() * 100000);
-    let id = 1;
+    let id = uniqid();
     this.join(id.toString());
     this.emit('created', id.toString());
-    console.log(io.sockets.adapter.rooms);
+    console.log(id);
 }
 
 function leaveRoom(room){
@@ -38,10 +41,19 @@ function playerJoinGame(id) {
             console.log(io.sockets.adapter.rooms);
         } else {
             this.emit('error', {
-                message: "This room does not exist."
+                message: `This room ${id} does not exist.`
             });
         }
     } catch (err) {
-        console.log(err);
+        console.log(err.message);
     }
+}
+
+let startGame = (obj) =>{
+    if(obj.type == 'admin')
+        io.sockets.in(obj.id).emit('gameStarted');
+}
+
+let songRequest = (obj) =>{
+    io.sockets.in(obj.id).emit('songRequested','WqCH4DNQBUA');
 }
