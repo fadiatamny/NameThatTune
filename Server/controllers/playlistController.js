@@ -1,7 +1,21 @@
-const { PlaylistModel, SongModel } = require('../database/mongoConnector');
+const {
+    PlaylistModel,
+    SongModel
+} = require('../database/mongoConnector');
 const Validator = require('../middleware/validator');
 const ErrHandler = require('../util/errorHandler');
 class Playlist {
+    static async getRandomSong(pID) {
+        if (!pID) pID = 0;
+        let obj = await PlaylistModel.getPlaylist(pID);
+
+        if (obj.length == 0) 
+            obj = await PlaylistModel.getPlaylist(0);
+        
+        obj = obj[0];
+        let randIndex = Math.floor((Math.random()*obj.songs.length));
+        return obj.songs[randIndex];
+    };
 
     static async insert(req, res) {
         try {
@@ -19,8 +33,7 @@ class Playlist {
             if (playlist) {
                 playlist.songs.push(song);
                 PlaylistModel.updatePlaylist(playlist);
-            }
-            else {
+            } else {
                 playlist = PlaylistModel({
                     id: req.params.playlist,
                     name: "Temp Name",
@@ -42,13 +55,22 @@ class Playlist {
                 name: req.body.playlistName
             });
 
-            if (playlist.exists().length != 0) throw { status: 409, message: 'A playlist with this id already exists' };
+            if ((await playlist.exists()).length != 0) throw {
+                status: 409,
+                message: 'A playlist with this id already exists'
+            };
 
             if (req.body.songs) {
                 let songsArr = req.body.songs;
                 songsArr.forEach(element => {
-                    if (!element.songName || !element.videoID) throw { status: 403, message: 'Missing Song Variables' };
-                    let song = SongModel({ name: element.songName, vid: element.videoID });
+                    if (!element.songName || !element.videoID) throw {
+                        status: 403,
+                        message: 'Missing Song Variables'
+                    };
+                    let song = SongModel({
+                        name: element.songName,
+                        vid: element.videoID
+                    });
                     playlist.songs.push(song);
                 });
             }
@@ -61,19 +83,73 @@ class Playlist {
     };
 
     static async update(req, res) {
+        try {
+            let obj = await PlaylistModel.getPlaylist(req.params.id);
+            if (obj.length == 0) throw {
+                status: 409,
+                message: 'A playlist with this id doesnt exists'
+            };
 
+            if (req.body.playlistName) obj.name = req.body.playlistName;
+            if (req.body.songs) {
+                req.body.songs.forEach(element => {
+                    if (!element.name || !element.vid) throw {
+                        status: 409,
+                        message: 'Incorrect song array format.'
+                    };
+                });
+                obj.songs = req.body.songs;
+            }
+            let msg = 'Playlist already up to date!';
+            let res = await PlaylistModel.updatePlaylist(obj);
+            if (res.nModified != 0)
+                msg = 'Updated Succesfully';
+
+            res.status(200).send(msg);
+        } catch (err) {
+            ErrHandler.handle(res, err);
+        }
     };
 
     static async delete(req, res) {
+        try {
+            let obj = await PlaylistModel.getPlaylist(req.params.id);
+            if (obj.length == 0) throw {
+                status: 409,
+                message: 'A playlist with this id doesnt exists'
+            };
 
+            await PlaylistModel.deletePlaylist(obj);
+            res.status(200).send('Successfully removed playlist');
+        } catch (err) {
+            ErrHandler.handle(res, err);
+        }
     };
 
     static async read(req, res) {
-
+        try {
+            let obj = await PlaylistModel.getPlaylist(req.params.id);
+            if (obj.length == 0) throw {
+                status: 409,
+                message: 'A playlist with this id doesnt exists'
+            };
+            res.status(200).json(obj);
+        } catch (err) {
+            ErrHandler.handle(res, err);
+        }
     };
 
     static async readAll(req, res) {
-
+        try {
+            let obj = await PlaylistModel.getPlaylists();
+            if (obj.length == 0) throw {
+                status: 409,
+                message: 'A playlist with this id doesnt exists'
+            };
+            res.status(200).json(obj);
+        } catch (err) {
+            ErrHandler.handle(res, err);
+        }
     };
 }
 

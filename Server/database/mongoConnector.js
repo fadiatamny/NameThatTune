@@ -50,6 +50,12 @@ playlist.static('getPlaylist', async function (id) {
     });
 });
 
+playlist.static('deletePlaylist', async function (id) {
+    return await this.deleteOne({ _id: obj._id }, (err) => {
+        if (err) throw err;
+    });
+});
+
 playlist.static('updatePlaylist', async function (obj) {
     return await this.updateOne({ _id: obj._id }, obj);
 });

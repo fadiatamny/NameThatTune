@@ -1,7 +1,6 @@
 const sqlite = require('sqlite3');
 
 class Connector {
-
     constructor(fileName = process.env.SQLITE_FILE || "./database/database.sqlite") {
         this.db = new sqlite.Database(fileName, (err) => {
             if (err) {
@@ -32,7 +31,7 @@ class Connector {
             this.db.serialize(() => {
                 this.db.all(sql, params, (err, rows) => {
                     if (err) {
-                        resolve(err);
+                        reject(err);
                         return;
                     }
                     if (rows) {
@@ -49,7 +48,7 @@ class Connector {
         return new Promise((resolve, reject) => {
             this.db.run(sql, params, (err) => {
                 if (err)
-                    resolve(err);
+                    reject(err);
                 else
                     resolve(undefined)
             });

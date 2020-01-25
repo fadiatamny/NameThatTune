@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const chalk = require('chalk');
 const songsRouter = require('./routers/songsRouter');
 const playlistRouter = require('./routers/playlistRouter');
+const apiRouter = require('./routers/apiRouter');
 
 const app = express();
 
@@ -24,6 +25,7 @@ const morganMiddleware = morgan(function (tokens, req, res) {
 
 app.use(morganMiddleware);
 
+app.use('/api',apiRouter);
 app.use('/playlist',playlistRouter);
 app.use('/songs',songsRouter);
 

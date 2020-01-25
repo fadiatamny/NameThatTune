@@ -1,4 +1,5 @@
 const uniqid = require('uniqid');
+const playlistController = require('./playlistController');
 
 let io;
 let gameSocket;
@@ -17,6 +18,7 @@ module.exports.init = function (sio, socket) {
     });
     gameSocket.on('startGame',startGame);
     gameSocket.on('songRequest',songRequest);
+    gameSocket.on('hostLeave',hostLeave);
 }
 
 function hostCreateNewGame() {
@@ -28,11 +30,16 @@ function hostCreateNewGame() {
 
 function leaveRoom(room){
     this.leave(room);
-}
+};
+
+function hostLeave(room){
+    io.sockets.adapter.rooms[room].forEach(element => {
+        element.leave(room);
+    });
+};
 
 function playerJoinGame(id) {
     try {
-        
         let room = io.sockets.adapter.rooms[id.toString()];
 
         if (room) {
@@ -47,13 +54,15 @@ function playerJoinGame(id) {
     } catch (err) {
         console.log(err.message);
     }
-}
+};
 
 let startGame = (obj) =>{
     if(obj.type == 'admin')
         io.sockets.in(obj.id).emit('gameStarted');
-}
+};
 
-let songRequest = (obj) =>{
-    io.sockets.in(obj.id).emit('songRequested','WqCH4DNQBUA');
-}
+let songRequest = async (obj) =>{
+    if(!obj.playlistID) obj.playlistID = 0;
+    let song = await playlistController.getRandomSong(obj.playlistID);
+    io.sockets.in(obj.id).emit('songRequested',song);
+};

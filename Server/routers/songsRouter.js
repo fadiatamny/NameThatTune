@@ -8,6 +8,14 @@ var youtube = google.youtube({
     auth: process.env.API_KEY
 });
 
+router.get('/random',async (req,res)=>{
+    try{
+        res.status(200).json(await playlistController.getRandomSong());
+    }catch(err){
+        console.log(err);
+    }
+});
+
 router.get('/search/:q', (req, res) => {
     youtube.search.list({
         part: 'snippet',
