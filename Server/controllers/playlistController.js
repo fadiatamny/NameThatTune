@@ -119,7 +119,7 @@ class Playlist {
                 message: 'A playlist with this id doesnt exists'
             };
             obj = obj[0];
-            await PlaylistModel.deletePlaylist(obj);
+            await PlaylistModel.deletePlaylist(obj._id);
             res.status(200).send('Successfully removed playlist');
         } catch (err) {
             ErrHandler.handle(res, err);

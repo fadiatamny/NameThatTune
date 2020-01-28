@@ -51,7 +51,7 @@ playlist.static('getPlaylist', async function (id) {
 });
 
 playlist.static('deletePlaylist', async function (id) {
-    return await this.deleteOne({ _id: obj._id }, (err) => {
+    return await this.deleteOne({ _id: id }, (err) => {
         if (err) throw err;
     });
 });
