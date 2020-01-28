@@ -12,18 +12,18 @@ module.exports.init = function (sio, socket) {
     gameSocket.emit('connected', {
         message: "You are connected!"
     });
-    gameSocket.on('create', hostCreateNewGame);
-    gameSocket.on('leave', leaveRoom);
-    gameSocket.on('join', playerJoinGame);
-    gameSocket.on('write', (data) => {
+    gameSocket.on('create', hostCreateNewGame); // host requests to create a room
+    gameSocket.on('leave', leaveRoom); // socket requests to leave room
+    gameSocket.on('join', playerJoinGame); // socket requests to join a room
+    gameSocket.on('write', (data) => { 
         console.log(data);
     });
-    gameSocket.on('startGame', startGame);
-    gameSocket.on('playlistRequest', playlistRequest);
-    gameSocket.on('hostLeave', hostLeave);
-    gameSocket.on('startRound', startRound);
-    gameSocket.on('endGame', endGame);
-    gameSocket.on('correctGuess', correctGuess);
+    gameSocket.on('startGame', startGame); // host requests to start a game in a room
+    gameSocket.on('playlistRequest', playlistRequest); // host requests the playlist to play with
+    gameSocket.on('hostLeave', hostLeave); // host disconnects issue !
+    gameSocket.on('startRound', startRound); // game round starts in a gamelobby
+    gameSocket.on('endGame', endGame); // game ends in a game lobby
+    gameSocket.on('correctGuess', correctGuess); // someone guessed right in a game lobby 
 }
 
 function startRound(obj) {
