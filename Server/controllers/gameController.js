@@ -1,5 +1,7 @@
 const uniqid = require('uniqid');
 const playlistController = require('./playlistController');
+const { PlaylistModel } = require('../database/mongoConnector');
+const _ = require('lodash');
 
 let io;
 let gameSocket;
@@ -11,15 +13,30 @@ module.exports.init = function (sio, socket) {
         message: "You are connected!"
     });
     gameSocket.on('create', hostCreateNewGame);
-    gameSocket.on('leave',leaveRoom);
+    gameSocket.on('leave', leaveRoom);
     gameSocket.on('join', playerJoinGame);
-    gameSocket.on('write', (data)=>{
+    gameSocket.on('write', (data) => {
         console.log(data);
     });
-    gameSocket.on('startGame',startGame);
-    gameSocket.on('songRequest',songRequest);
-    gameSocket.on('hostLeave',hostLeave);
+    gameSocket.on('startGame', startGame);
+    gameSocket.on('playlistRequest', playlistRequest);
+    gameSocket.on('hostLeave', hostLeave);
+    gameSocket.on('startRound', startRound);
+    gameSocket.on('endGame', endGame);
+    gameSocket.on('correctGuess', correctGuess);
 }
+
+function startRound(obj) {
+    io.sockets.in(obj.id).emit('roundInitated',obj.song,obj.options);
+};
+
+function endGame(id) {
+    io.sockets.in(id).emit('sessionEnded');
+};
+
+function correctGuess(id) {
+    io.sockets.in(id).emit('roundEnd');
+};
 
 function hostCreateNewGame() {
     let id = uniqid();
@@ -28,14 +45,12 @@ function hostCreateNewGame() {
     console.log(id);
 }
 
-function leaveRoom(room){
+function leaveRoom(room) {
     this.leave(room);
 };
 
-function hostLeave(room){
-    io.sockets.adapter.rooms[room].forEach(element => {
-        element.leave(room);
-    });
+function hostLeave(room) {
+    io.sockets.in(room).emit('gameEnded');
 };
 
 function playerJoinGame(id) {
@@ -56,13 +71,18 @@ function playerJoinGame(id) {
     }
 };
 
-let startGame = (obj) =>{
-    if(obj.type == 'admin')
+let startGame = (obj) => {
+    console.log(obj.type == 'admin');
+    if (obj.type == 'admin')
         io.sockets.in(obj.id).emit('gameStarted');
 };
 
-let songRequest = async (obj) =>{
-    if(!obj.playlistID) obj.playlistID = 0;
-    let song = await playlistController.getRandomSong(obj.playlistID);
-    io.sockets.in(obj.id).emit('songRequested',song);
+let playlistRequest = async function (obj) {
+    if (!obj.playlistID) obj.playlistID = 0;
+    let playlist = await PlaylistModel.getPlaylist(obj.playlistID);
+    if (playlist.length == 0) this.emit('error', { message: `playlist with id : ${obj.playlistID} doesnt exist` });
+    playlist = playlist[0];
+    let songs = _.shuffle(playlist.songs);
+    this.emit('playlistRequested', songs);
 };
+
