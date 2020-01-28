@@ -42,7 +42,7 @@ class Playlist {
                 await playlist.save();
             }
 
-            res.status(200).send('cool');
+            res.status(200).send('Succesfully inserted');
         } catch (err) {
             ErrHandler.handle(res, err);
         }
@@ -76,7 +76,7 @@ class Playlist {
             }
 
             await playlist.save();
-            res.status(200).send('Cool');
+            res.status(200).send('Successfully created');
         } catch (err) {
             ErrHandler.handle(res, err);
         }
@@ -89,7 +89,7 @@ class Playlist {
                 status: 409,
                 message: 'A playlist with this id doesnt exists'
             };
-
+            obj = obj[0];
             if (req.body.playlistName) obj.name = req.body.playlistName;
             if (req.body.songs) {
                 req.body.songs.forEach(element => {
@@ -101,8 +101,8 @@ class Playlist {
                 obj.songs = req.body.songs;
             }
             let msg = 'Playlist already up to date!';
-            let res = await PlaylistModel.updatePlaylist(obj);
-            if (res.nModified != 0)
+            let result = await PlaylistModel.updatePlaylist(obj);
+            if (result.nModified != 0)
                 msg = 'Updated Succesfully';
 
             res.status(200).send(msg);
@@ -118,7 +118,7 @@ class Playlist {
                 status: 409,
                 message: 'A playlist with this id doesnt exists'
             };
-
+            obj = obj[0];
             await PlaylistModel.deletePlaylist(obj);
             res.status(200).send('Successfully removed playlist');
         } catch (err) {

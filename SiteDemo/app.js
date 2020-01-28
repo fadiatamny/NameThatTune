@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:1337');
+var socket = io.connect('https://name-that-tune-2020.herokuapp.com/');
 
 let room;
 let playlistID = 0;
