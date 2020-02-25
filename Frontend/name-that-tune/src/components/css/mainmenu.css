@@ -1,0 +1,98 @@
+/* Select Join Room */
+
+.select_join_room {
+    background: url("../images/select_join_room.png") no-repeat;
+    background-size: cover;
+    padding: 30px 25px;
+    min-height: 100vh;
+}
+
+.select_join_room .logo_mini {
+    margin-bottom: 35px;
+}
+
+.select_join {
+    max-width: 475px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 100px;
+}
+
+.select_join_area {
+    max-width: 274px;
+    margin: 30px auto 0;
+    position: relative;
+    border-radius: 10px;
+    padding: 40px 0 30px;
+    top: -15px;
+}
+
+.create_room,
+.join_room {
+    text-align: center;
+    margin: 0 0 35px;
+    font-size: 24px;
+    font-family: Montserrat-Bold;
+    overflow: hidden;
+}
+
+.select_join .base_line {
+    margin-top: 60px;
+}
+
+.total_games {
+    overflow: hidden;
+}
+
+.tgame {
+    float: left;
+    text-align: center;
+    font-size: 30px;
+    width: 50%;
+    font-family: Montserrat-Light;
+    padding-top: 20px;
+}
+
+.tgame p {
+    font-size: 14px;
+    margin: 15px 0 0;
+}
+
+.logout:hover{
+    cursor: pointer;
+}
+
+@media screen and (max-width:1024px) {
+    .select_join {
+        margin-top: 150px;
+    }
+}
+
+@media screen and (max-width: 812px) {
+    .select_join{margin-bottom: 20px;}
+}
+
+@media screen and (max-width: 767px) {
+    .select_join_room {
+        padding: 80px 0;
+    }
+
+    .select_join_area {
+        max-width: 235px;
+    }
+
+    .select_join {
+        max-width: 385px;
+    }
+
+    .create_room,
+    .join_room {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 736px) {
+    .select_join {
+        margin-top: 50px;
+    }
+}

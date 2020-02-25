@@ -1,0 +1,91 @@
+/*Sign Up*/
+
+.signup {
+    background: url("../images/signup.png") no-repeat;
+    background-size: cover;
+    padding: 30px 25px;
+    min-height: 100vh
+}
+
+.react-datepicker-wrapper {
+    display: block;
+}
+
+.react-datepicker-popper {
+    z-index: 9999;
+}
+
+.signup_area {
+    max-width: 400px;
+    margin: 0 auto;
+    padding-top: 40px;
+}
+
+.signup_main {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 25px;
+    margin-bottom: 50px;
+}
+
+.signup_list li {
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.signup_list li input,
+.signup_list .bg_signup {
+    background: rgb(239, 231, 170);
+    background: -moz-linear-gradient(90deg, rgba(239, 231, 170, 1) 0%, rgba(186, 231, 214, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(239, 231, 170, 1) 0%, rgba(186, 231, 214, 1) 100%);
+    background: linear-gradient(90deg, rgba(239, 231, 170, 1) 0%, rgba(186, 231, 214, 1) 100%);
+    position: relative;
+    text-align: right;
+    padding-left: 105px;
+}
+
+.signup_list li .orangeshade {
+    background: rgb(255, 195, 161);
+    background: -moz-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+}
+
+.signup_list .select_date {
+    width: 100%;
+    color: #333;
+    cursor: pointer;
+}
+
+.radio_button ul li {
+    margin-bottom: 0;
+    margin-top: -5px;
+    display: inline-block;
+}
+
+.radio_button input {
+    visibility: hidden;
+}
+
+.radio_button label {
+    cursor: pointer;
+}
+
+.radio_button input:checked+label {
+    font-weight: 700;
+}
+
+.signup_list .signup_username {
+    margin-bottom: 50px;
+}
+
+.signup_list li .before_text {
+    position: absolute;
+    left: 20px;
+    top: 25px;
+    z-index: 1;
+    color: #7e7c65;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+

@@ -1,0 +1,8 @@
+body {
+  line-height: 1;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  min-height: 50vh;
+  padding: 0 !important;
+  background: none !important;
+}

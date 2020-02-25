@@ -1,18 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.scss';
-import io from 'socket.io-client';
+import { Route, BrowserRouter as Router} from "react-router-dom";
+import './App.css';
+import MetaTags from 'react-meta-tags';
+import Login from './components/Login';
+import MainMenu from './components/MainMenu';
+import Signup from './components/Signup';
+import Game from './components/Game';
+import Chat from './components/Chat';
+import ReadChat from './components/Read_chat';
+import ErrorComponent from './components/ErrorComponent';
 
-import loginPage from './pages/auth/loginPage'
-import registerPage from './pages/auth/registerPage'
-import gamePage from './pages/game/gamePage'
-import gameLobbyPage from './pages/game/gameLobbyPage'
 function App() {
   return (
     <div className="App">
       <MetaTags>
         <title>GameApp</title>
-        <meta charset="utf-8" />
+        <meta charSet="utf-8" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -21,15 +24,16 @@ function App() {
 
       <Router>
         <div>
-          <Route exact path="/" component={ login } />
-          <Route path="/register" component={ register } />
-          {/* <Route path="/join_room" component={Select_join_room} /> */}
-          <Route path="/game" component={ gamePage } />
-          <Route path="/game/lobby" component={ gameLobbyPage } />
-          {/* <Route path="/chat" component={Chat} />
-          <Route path="/read_chat" component={ReadChat} /> */}
+          <Route exact path="/" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/MainMenu" component={MainMenu} />
+          <Route path="/Game" component={Game} />
+          {/* <Route path="/plc" component={Chat} />
+          <Route path="/plc_details" component={ReadChat} />
+          <Route component={ErrorComponent} /> */}
         </div>
       </Router>
+      
     </div>
   );
 }

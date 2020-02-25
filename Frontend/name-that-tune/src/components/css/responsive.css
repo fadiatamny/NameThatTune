@@ -1,0 +1,149 @@
+@media screen and (max-width: 1024px) {
+    .login {
+        padding: 100px 25px;
+    }
+
+    .welcomeback,
+    .login_text {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .hidden-xs {
+        display: none;
+    }
+
+    .back_arrow {
+        left: 15px;
+    }
+
+    .login,
+    .game_loby {
+        padding: 5px;
+        background: rgba(241, 231, 168, 1);
+    }
+
+    .gues_that_song {
+        background: rgba(241, 231, 168, 1);
+    }
+
+    .logo_main {
+        max-width: 100px;
+        float: none;
+        margin: 40px auto;
+    }
+
+    .btn_login {
+        margin-left: 20px;
+    }
+
+    .welcomeback {
+        font-size: 20px;
+        color: #606060
+    }
+
+    .login_text {
+        font-size: 30px;
+    }
+
+    .welcomeback,
+    .login_text {
+        padding: 0 20px
+    }
+
+    .login_area li.username {
+        margin-right: 20px;
+    }
+
+    .login_area li.password {
+        margin-left: 20px;
+    }
+
+    .signup_area {
+        padding-top: 90px;
+    }
+
+    .signup_list {
+        margin-bottom: 40px;
+        overflow: hidden;
+    }
+
+    .select_join_room {
+        padding: 80px 0 0
+    }
+
+    .select_join_area {
+        max-width: 235px;
+    }
+
+    .create_room,
+    .join_room {
+        font-size: 20px;
+    }
+
+    .logo_mini {
+        max-width: 100px;
+    }
+
+    .tgame {
+        font-size: 25px;
+    }
+
+    .tgame p {
+        font-size: 12px;
+    }
+
+    .logout {
+        padding: 20px 0
+    }
+
+    .game_loby_area {
+        margin-top: 110px;
+    }
+
+    .game_loby_area .main_text {
+        font-size: 30px;
+    }
+
+    .songs_area .left_side {
+        width: 100%;
+    }
+
+    .songs_area .right_side {
+        width: 100%;
+    }
+
+    .songs_area .left_side .left_side li,
+    .songs_area .left_side .right_side li {
+        float: left;
+    }
+
+    .songs_area .left_side .list_songs li {
+        width: 30%;
+        margin-right: 11px;
+    }
+
+    .submit_song {
+        width: 90%;
+        margin: 0 15px 50px;
+    }
+
+    .chat_users,
+    .read_chat {
+        width: 100%;
+        float: none;
+    }
+
+    .chat_users2 {
+        width: 100%;
+    }
+
+    .chat_area {
+        padding: 0
+    }
+
+    .read_chat {
+        padding: 0 25px;
+    }
+}

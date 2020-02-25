@@ -1,0 +1,282 @@
+/*Chat Area*/
+
+.chat.greenshade {
+    padding: 60px 0 30px;
+    min-height: 100vh;
+}
+
+.chat_area {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 25px 0 100px;
+}
+
+.chat_users {
+    width: 30%;
+    float: left;
+}
+
+.selected_chat {
+    margin: 30px 0;
+}
+
+.chat_users2 {
+    width: 40%;
+    float: right;
+}
+
+.chat_users .title_page {
+    font-size: 16px;
+    text-align: center;
+    font-family: Montserrat-Medium;
+    margin-bottom: 20px;
+}
+
+.chat_users .title_page span {
+    display: inline-block;
+    margin-top: 30px;
+}
+
+.chat_users .title_page img {
+    width: 40px;
+    float: left;
+}
+
+.chat_users ul li,
+.chat_users ul li {
+    padding: 0 15px 0 30px;
+}
+
+.chat_users ul li a,
+.chat_users2 ul li a,
+.reading_message {
+    background: rgba(255, 195, 161, 1);
+    background: -moz-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    display: block;
+    padding: 30px 20px 0;
+    position: relative;
+
+}
+
+.chat_users ul li a,
+.chat_users2 ul li a {
+    text-decoration: none;
+}
+
+.chat_users ul li:first-child a,
+.chat_users2 ul li:first-child a {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.chat_users ul li:last-child a,
+.chat_users2 ul li:last-child a {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.chat_users ul li a .name,
+.chat_users2 ul li a .name,
+.reading_message .name {
+    margin-left: 33px;
+    border-bottom: 2px solid #222;
+    padding-bottom: 30px;
+}
+
+.chat_users ul li a img,
+.chat_users2 ul li a img,
+.reading_message img {
+    width: 50px;
+    float: left;
+    margin: 0 21px 0 -35px;
+    position: relative;
+    z-index: 99;
+}
+
+.chat_users ul li a .username,
+.chat_users2 ul li a .username,
+.reading_message .username {
+    font-family: Montserrat-Medium;
+    margin-bottom: 10px;
+    line-height: 2;
+}
+
+.chat_users ul li a .time,
+.chat_users2 ul li a .time {
+    float: right;
+    font-size: 12px;
+}
+
+.chat_users ul li:hover,
+.chat_users ul li:focus,
+.chat_users ul li.active_chat,
+.chat_users ul li:hover a,
+.chat_users ul li:focus a,
+.chat_users ul li.active_chat a {
+    background: rgba(194, 233, 251, 1);
+    background: -moz-linear-gradient(90deg, rgba(194, 233, 251, 1) 0%, rgba(161, 196, 253, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(194, 233, 251, 1) 0%, rgba(161, 196, 253, 1) 100%);
+    background: linear-gradient(90deg, rgba(194, 233, 251, 1) 0%, rgba(161, 196, 253, 1) 100%);
+    margin-left: 0px;
+    margin-right: 0px;
+    border-radius: 10px;
+    text-decoration: none;
+
+}
+
+.songs_area .left_side .list_songs li a.active_song i {
+    visibility: unset
+}
+
+.chat_users ul li:hover,
+.chat_users ul li:focus,
+.chat_users ul li.active_chat {
+    box-shadow: 0 10px 35px 0 #888;
+}
+
+.chat_users ul li.nothing a {
+    pointer-events: none;
+}
+
+.chat_users ul li.nothing:hover,
+.chat_users ul li.nothing:focus {
+    background: inherit;
+    box-shadow: unset;
+}
+
+.chat_users ul li.nothing:hover a,
+.chat_users ul li.nothing:focus a {
+    background: rgba(255, 195, 161, 1);
+    background: -moz-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.read_chat {
+    width: 63%;
+    float: right;
+    background: rgba(194, 233, 251, 1);
+    background: -moz-linear-gradient(90deg, rgba(194, 233, 251, 1) 0%, rgba(161, 196, 253, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(194, 233, 251, 1) 0%, rgba(161, 196, 253, 1) 100%);
+    background: linear-gradient(90deg, rgba(194, 233, 251, 1) 0%, rgba(161, 196, 253, 1) 100%);
+    border-radius: 10px;
+    padding: 25px 10px 25px 60px;
+}
+
+.chat_users2 ul li a {
+    padding: 15px 13px 0;
+}
+
+.read_chat .chat_users2 li.readed a:after {
+    content: '\f00c';
+    position: absolute;
+    top: 30px;
+    color: #35AA90;
+    right: 20px;
+    font-family: Fontawesome
+}
+
+.reading_message {
+    width: 57%;
+    float: right;
+    margin-top: 20%;
+    padding: 60px 50px 40px;
+    border-radius: 10px;
+}
+
+.reading_message .name {
+    border-bottom: 0px;
+    overflow: hidden;
+    padding: 0;
+}
+
+.reading_message .message {
+    margin-bottom: 50px;
+}
+
+.reading_message img {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    margin-top: -25px;
+}
+
+.reading_message .username {
+    float: left;
+}
+
+.reading_message .online_status {
+    float: right;
+    line-height: 2;
+    font-size: 12px;
+}
+
+.show-xs {
+    display: none;
+}
+
+@media screen and (max-width: 1024px) {
+    .chat_area {
+        padding: 50px 25px 0 30px;
+    }
+
+    .read_chat {
+        padding: 25px 10px 25px 20px;
+    }
+
+    .reading_message {
+        margin-top: 25%;
+        padding: 60px 30px 40px 10px;
+    }
+
+    .chat_users ul li,
+    .chat_users ul li {
+        padding: 0 15px 0 20px;
+    }
+
+    .chat.greenshade {
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .hidden-xs {
+        display: none;
+    }
+
+    .back_arrow {
+        left: 15px;
+    }
+
+    .chat_users,
+    .read_chat {
+        width: 100%;
+        float: none;
+    }
+
+    .chat_users2 {
+        width: 100%;
+    }
+
+    .chat_area {
+        padding: 0
+    }
+
+    .read_chat {
+        padding: 0 25px;
+    }
+
+    .chat.greenshade {
+        padding: 60px 15px 30px
+    }
+
+    .chat_users .title_page img {
+        float: right;
+    }
+}
+
+@media screen and (max-width: 767px) {.show-xs{display: block;}}

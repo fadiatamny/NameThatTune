@@ -1,0 +1,310 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url(../fonts/Montserrat-Regular.ttf);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Montserrat-Light';
+    src: url(../fonts/Montserrat-Light.ttf);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: url(../fonts/Montserrat-Bold.ttf);
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url(../fonts/Montserrat-Medium.ttf);
+    font-weight: 700;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+a {
+    display: inline-block;
+    color: #333
+}
+
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+}
+
+img {
+    vertical-align: top;
+    width: 100%;
+}
+
+body {
+    line-height: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    min-height: 50vh;
+}
+
+ol,
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Inputs */
+
+input[type="text"],
+input[type="password"],
+select,
+.btn_full,
+.radio_button {
+    width: 100%;
+    height: auto;
+    padding: 25px;
+    border: 0px;
+    border-radius: 10px;
+}
+
+select {
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/*Backgrounds*/
+.box-shadow {
+    box-shadow: 0 4px 16px -4px #888;
+}
+
+.redshade {
+    background: rgba(255, 195, 161, 1);
+    background: -moz-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+}
+
+.pswd_field {
+    background: rgba(179, 189, 144, 1);
+    background: -moz-linear-gradient(90deg, rgba(179, 189, 144, 1) 0%, rgba(198, 219, 177, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(179, 189, 144, 1) 0%, rgba(198, 219, 177, 1) 100%);
+    background: linear-gradient(90deg, rgba(179, 189, 144, 1) 0%, rgba(198, 219, 177, 1) 100%);
+}
+
+.orangeshade {
+    background: rgba(255, 195, 161, 1);
+    background: -moz-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+}
+
+.greenshade {
+    background: rgba(241, 231, 168, 1);
+    background: -webkit-linear-gradient(left, rgba(241, 231, 168, 1) 0%, rgba(184, 231, 215, 1) 100%);
+    background: -o-linear-gradient(left, rgba(241, 231, 168, 1) 0%, rgba(184, 231, 215, 1) 100%);
+    background: linear-gradient(to right, rgba(241, 231, 168, 1) 0%, rgba(184, 231, 215, 1) 100%);
+}
+
+.blueshade {
+    background: rgba(194, 233, 251, 1);
+    background: -moz-linear-gradient(90deg, rgba(194, 233, 251, 1) 0%, rgba(161, 196, 253, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(194, 233, 251, 1) 0%, rgba(161, 196, 253, 1) 100%);
+    background: linear-gradient(90deg, rgba(194, 233, 251, 1) 0%, rgba(161, 196, 253, 1) 100%);
+}
+
+/*Buttons*/
+
+.btn-black {
+    background: rgb(3, 3, 3);
+    background: -webkit-linear-gradient(left, rgba(3, 3, 3, 1) 0%, rgba(65, 65, 65, 1) 100%);
+    background: -o-linear-gradient(left, rgba(3, 3, 3, 1) 0%, rgba(65, 65, 65, 1) 100%);
+    background: linear-gradient(to right, rgba(3, 3, 3, 1) 0%, rgba(65, 65, 65, 1) 100%);
+    color: #f1ea94;
+    text-align: center;
+    border-radius: 25px;
+    padding: 12px 35px;
+    font-weight: 700;
+}
+
+.btn-black:hover,
+.btn-black:focus {
+    background: rgba(3, 3, 3, 1);
+    background: -webkit-linear-gradient(left, rgba(65, 65, 65, 1) 0%, rgba(3, 3, 3, 1) 100%);
+    background: -o-linear-gradient(left, rgba(65, 65, 65, 1) 0%, rgba(3, 3, 3, 1) 100%);
+    background: linear-gradient(to right, rgba(65, 65, 65, 1) 0%, rgba(3, 3, 3, 1) 100%);
+    color: #f1ea94;
+    outline: none;
+}
+
+.btn-round {
+    border-radius: 50%;
+}
+
+.back_arrow {
+    background: rgb(3, 3, 3);
+    background: -webkit-linear-gradient(left, rgba(3, 3, 3, 1) 0%, rgba(65, 65, 65, 1) 100%);
+    background: -o-linear-gradient(left, rgba(3, 3, 3, 1) 0%, rgba(65, 65, 65, 1) 100%);
+    background: linear-gradient(to right, rgba(3, 3, 3, 1) 0%, rgba(65, 65, 65, 1) 100%);
+    color: #f1ea94;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #f1ea94;
+    text-align: center;
+    line-height: 2.2;
+    font-size: 18px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.back_arrow:hover,
+.back_arrow:focus {
+    background: rgba(3, 3, 3, 1);
+    background: -webkit-linear-gradient(left, rgba(65, 65, 65, 1) 0%, rgba(3, 3, 3, 1) 100%);
+    background: -o-linear-gradient(left, rgba(65, 65, 65, 1) 0%, rgba(3, 3, 3, 1) 100%);
+    background: linear-gradient(to right, rgba(65, 65, 65, 1) 0%, rgba(3, 3, 3, 1) 100%);
+    color: #f1ea94;
+    outline: none;
+
+}
+
+.logout {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 15px 0;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+
+
+
+
+

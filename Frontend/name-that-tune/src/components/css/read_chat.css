@@ -1,0 +1,9 @@
+@media screen and (max-width:980px) {
+    .show-xs {
+        display: block;
+    }
+
+    .chat_users {
+        width: 100%;
+    }
+}
