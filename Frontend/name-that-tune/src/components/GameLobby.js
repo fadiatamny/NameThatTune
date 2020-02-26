@@ -8,7 +8,11 @@ import "./css/responsive.css";
 
 
 function GameLobby(props) {
-  
+  let list = JSON.parse(sessionStorage.getItem('playerlist'));
+  if(list)
+    list = list.length >= props.players.length ? list : props.players;
+  else
+    list = props.players;
   return (
     <div className="game_loby greenshade">
       <div to="./MainMenu" onClick={props.leaveLobby} className="back_arrow">
@@ -17,32 +21,20 @@ function GameLobby(props) {
 
       <div className="game_loby_area">
         <div className="invite_code hidden-xs">
-          <input
-            type="text"
-            className="blueshade"
-            placeholder="INV CODE"
-          />
+          <div className="blueshade"><p className='code justify-content-center'>{sessionStorage.getItem('room')}</p></div>
         </div>
         <div className="main_text">
-          Game Lobby
                 <p>
-                  Get ready to guess some tunes!
+            Get ready to guess some tunes!
                 </p>
         </div>
-        <ul className="game_users">
-          <li>
-            <img src={require("../components/images/Oval-2.png")} />
-            <p>Sophia</p>
-          </li>
-          <li>
-            <img src={require("../components/images/Oval-1.png")} />
-            <p>Sophia</p>
-          </li>
-          <li>
-            <img src={require("../components/images/Oval.png")} />
-            <p>Sophia</p>
-          </li>
-        </ul>
+        <div className="d-flex game_users justify-content-center">
+          {list.map((item,index) => (
+            <div key={index}>
+                <img src={require(`../components/images/userIcon.png`)} />
+                <p>{item}</p>
+            </div>))}
+        </div>
         <div className="start_game">
           <button onClick={props.startGame} className="btn-black start_game_btn">
             State Game !

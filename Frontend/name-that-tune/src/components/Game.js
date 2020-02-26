@@ -14,6 +14,8 @@ const socket = io.connect(testendpoint);
 function Game(props) {
     const [gameState, setGameState] = React.useState(false);
     const [renderSwitch, setRenderSwitch] = React.useState(0);
+    const [renderSwitch1, setRenderSwitch1] = React.useState(0);
+    const [renderSwitch2, setRenderSwitch2] = React.useState(0);
 
     let roomID;
 
@@ -21,6 +23,7 @@ function Game(props) {
     let playlistID = 0;
     let playlist;
     let options = [];
+    let players = [sessionStorage.getItem('username')];
 
     React.useEffect(() => {
         console.log('mount');
@@ -30,13 +33,15 @@ function Game(props) {
         }
         if (!!props.location.state && props.location.state.owner === true){
             console.log('creating');
+            sessionStorage.setItem('playerlist',JSON.stringify(players));
+            console.log(sessionStorage.getItem('playerlist'));
             socket.emit('create');
         }
         else{
             let room = ''+window.location.href.split('/Game/')[1];
             let user = sessionStorage.getItem('username');
+            sessionStorage.setItem('room',room);
             socket.emit('join', room,user);
-            setGameState(true);
         }
     }, []);
 
@@ -45,6 +50,8 @@ function Game(props) {
         sessionStorage.removeItem('song');
         sessionStorage.removeItem('options');
         sessionStorage.removeItem('inGame');
+        sessionStorage.removeItem('room');
+        sessionStorage.removeItem('playerlist');
         socket.emit('terminate'); socket.disconnect(); socket.close();
     }, []);
 
@@ -54,7 +61,6 @@ function Game(props) {
         props.history.push('/MainMenu');
     };
 
-
     let guessSong = (guess) => {
         let currSong = JSON.parse(sessionStorage.getItem('song'));
         if (guess == currSong.name) {
@@ -63,12 +69,23 @@ function Game(props) {
     };
 
     let startGame = () => {
-        if (!!props.location.state && props.location.state.owner == true)
+        if (!!props.location.state && props.location.state.owner == true){
+            console.log('sending server startgame');
             socket.emit('startGame', { id: roomID, type: 'admin' });
+        }
     }
 
-    socket.on('joined', (data) => {
-        console.log(data);
+    socket.on('joined', (id,user) => {
+        if (!!props.location.state && props.location.state.owner == true){
+            socket.emit('updatePlayerList',roomID,[...players,user]);
+        }
+    });
+
+    socket.on('newPlayerList',async function(data){
+        players = data;
+        sessionStorage.setItem('playerlist',JSON.stringify(data));
+        console.log(sessionStorage.getItem('playerlist'),'new players yoo');
+        setRenderSwitch(renderSwitch + 1);
     });
 
     socket.on('connect', function () {
@@ -86,6 +103,7 @@ function Game(props) {
     });
 
     socket.on('roundInitated', (currSong, options) => {
+        console.log('round starting yoo');
         options = _.shuffle(options);
         sessionStorage.setItem('song', JSON.stringify(currSong));
         sessionStorage.setItem('options', JSON.stringify(options));
@@ -93,7 +111,7 @@ function Game(props) {
         if (gameState === false) {
             setGameState(true);
         } else {
-            setRenderSwitch(renderSwitch + 1);
+            setRenderSwitch1(renderSwitch1+1);
         }
     });
 
@@ -107,11 +125,14 @@ function Game(props) {
 
     socket.on('sessionEnded', () => {
         count = 0;
+        setGameState(false);
     });
 
     socket.on('created', (data) => {
         roomID = data;
-        console.log(roomID);
+        sessionStorage.setItem('room',data);
+        console.log(sessionStorage.getItem('room'),data);
+        setRenderSwitch(renderSwitch+1);
     });
 
     socket.on('playlistRequested', (data) => {
@@ -129,10 +150,10 @@ function Game(props) {
     });
 
     socket.on('gameStarted', () => {
-        console.log('started woooo');
-        console.log('props.location.state.owner');
+        console.log('gamestarted?');
         if (!!props.location.state && props.location.state.owner === true)
             socket.emit('playlistRequest', { id: roomID, playlistID: playlistID });
+        setGameState(true);
     });
 
     socket.on('errorMessage', (data) => {
@@ -140,7 +161,7 @@ function Game(props) {
         props.history.push('/MainMenu');
     });
 
-    return gameState ? <GameSession guessSong={guessSong} leaveLobby={leaveLobby} /> : <GameLobby roomID={roomID} startGame={startGame} leaveLobby={leaveLobby} />;
+    return gameState ? <GameSession guessSong={guessSong} leaveLobby={leaveLobby} /> : <GameLobby roomID={roomID} startGame={startGame} leaveLobby={leaveLobby} players={players} />;
 
 }
 

@@ -17,9 +17,15 @@
     margin-bottom: 60px;
 }
 
-.invite_code input {
+.invite_code div {
     padding: 18px 25px;
     box-shadow: 7px 15px 30px -12px #999;
+    border-radius: 5%;
+}
+
+.code {
+    text-align: center;
+    font-size: 20px;
 }
 
 .game_loby_area .main_text {
@@ -32,30 +38,26 @@
 .game_loby_area .main_text p {
     margin-top: 20px;
     font-size: 16px;
+    text-align: center;
     line-height: 1.5
 }
 
 .game_users {
-    overflow: hidden;
     margin-bottom: 80px;
 }
 
-.game_users li {
-
-    float: left;
-    width: 33%;
+.game_users div {
+    margin: 0 10px;
     text-align: center;
-
 }
 
-.game_users li img {
-    max-width: 50px;
+.game_users div img {
     margin-bottom: 15px;
     box-shadow: 0 5px 12px 0 #666;
     border-radius: 50%;
 }
 
-.game_users li p {
+.game_users div p {
     font-family: Montserrat-Bold;
     color: #323232
 }

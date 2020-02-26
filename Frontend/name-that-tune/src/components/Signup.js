@@ -9,6 +9,9 @@ import "./css/responsive.css";
 import Axios from 'axios';
 import CacheHandler from './interfaces/CacheHandler';
 
+const testendpoint = 'http://localhost:1337';
+const endpoint = 'https://name-that-tune-2020.herokuapp.com';
+
 function Signup(props) {
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -29,10 +32,14 @@ function Signup(props) {
   async function submitForm(e) {
     e.preventDefault();
     try {
-      await Axios.post('https://name-that-tune-2020.herokuapp.com/api/signup', {
+      await Axios.post(`${testendpoint}/api/signup`, {
         "id": userName,
         "password": password
       });
+
+      CacheHandler.setCache('logged-in', true);
+      CacheHandler.setCache('username', userName);
+      
       props.history.push('/MainMenu');
 
     } catch (err) {

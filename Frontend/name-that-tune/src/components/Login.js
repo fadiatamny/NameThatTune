@@ -13,28 +13,28 @@ const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 function Login(props) {
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [text,setText] = React.useState(<div>Log in <br />to continue.</div>);
-  const red = {color: 'red'};
+  const [text, setText] = React.useState(<div>Log in <br />to continue.</div>);
+  const red = { color: 'red' };
 
   React.useEffect(() => {
-    if(CacheHandler.verifyCache('logged-in'))
+    if (CacheHandler.verifyCache('logged-in'))
       props.history.push('/MainMenu');
   }, []);
 
   async function verify(e) {
-    if(e){e.preventDefault();}
+    if (e) { e.preventDefault(); }
     try {
-      await Axios.post(testendpoint+'/api/login', {
+      await Axios.post(`${testendpoint}/api/login`, {
         "id": userName,
         "password": password
       });
-      CacheHandler.setCache('logged-in',true);
-      CacheHandler.setCache('username',userName);
+      CacheHandler.setCache('logged-in', true);
+      CacheHandler.setCache('username', userName);
 
       props.history.push('/MainMenu');
     } catch (err) {
       console.log(err);
-      setText(<div>Log in <br />to continue. <br/> <span style={red}>Please Retry!</span></div>);
+      setText(<div>Log in <br />to continue. <br /> <span style={red}>Please Retry!</span></div>);
     }
   };
 

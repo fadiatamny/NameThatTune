@@ -24,6 +24,7 @@ module.exports.init = function (sio, socket) {
     gameSocket.on('startRound', startRound); // game round starts in a gamelobby
     gameSocket.on('endGame', endGame); // game ends in a game lobby
     gameSocket.on('correctGuess', correctGuess); // someone guessed right in a game lobby 
+    gameSocket.on('updatePlayerList',updatePlayerList);
 }
 
 function startRound(obj) {
@@ -38,11 +39,15 @@ function correctGuess(id) {
     io.sockets.in(id).emit('roundEnd');
 };
 
+function updatePlayerList(id,data){
+    console.log(data);
+    io.sockets.in(id).emit('newPlayerList',data);
+};
+
 function hostCreateNewGame() {
     let id = uniqid();
     this.join(id.toString());
     this.emit('created', id.toString());
-    console.log(id);
 }
 
 function leaveRoom(room) {
@@ -53,16 +58,16 @@ function hostLeave(room) {
     io.sockets.in(room).emit('gameEnded');
 };
 
-function playerJoinGame(id) {
+function playerJoinGame(id,name) {
     try {
         let room = io.sockets.adapter.rooms[id.toString()];
 
         if (room) {
             this.join(id);
-            io.sockets.in(id).emit('joined', id);
+            io.sockets.in(id).emit('joined', id,name);
             console.log(io.sockets.adapter.rooms);
         } else {
-            this.emit('error', {
+            this.emit('errorMessage', {
                 message: `This room ${id} does not exist.`
             });
         }
@@ -80,7 +85,7 @@ let startGame = (obj) => {
 let playlistRequest = async function (obj) {
     if (!obj.playlistID) obj.playlistID = 0;
     let playlist = await PlaylistModel.getPlaylist(obj.playlistID);
-    if (playlist.length == 0) this.emit('error', { message: `playlist with id : ${obj.playlistID} doesnt exist` });
+    if (playlist.length == 0) this.emit('errorMessage', { message: `playlist with id : ${obj.playlistID} doesnt exist` });
     playlist = playlist[0];
     let songs = _.shuffle(playlist.songs);
     this.emit('playlistRequested', songs);
