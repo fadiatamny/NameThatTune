@@ -20,7 +20,7 @@ function GameLobby(props) {
       </div>
 
       <div className="game_loby_area">
-        <div className="invite_code hidden-xs">
+        <div className="invite_code">
           <div className="blueshade"><p className='code justify-content-center'>{sessionStorage.getItem('room')}</p></div>
         </div>
         <div className="main_text">

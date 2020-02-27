@@ -59,6 +59,7 @@ function hostLeave(room) {
 };
 
 function playerJoinGame(id,name) {
+    console.log(name,'joining',id);
     try {
         let room = io.sockets.adapter.rooms[id.toString()];
 
@@ -77,9 +78,11 @@ function playerJoinGame(id,name) {
 };
 
 let startGame = (obj) => {
-    console.log(obj.type == 'admin');
-    if (obj.type == 'admin')
+    console.log(obj.type == 'admin')
+    if (obj.type == 'admin'){
+        console.log('EMITTING IN ' + obj.id);
         io.sockets.in(obj.id).emit('gameStarted');
+    }
 };
 
 let playlistRequest = async function (obj) {
