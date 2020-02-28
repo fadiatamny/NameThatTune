@@ -25,10 +25,13 @@ module.exports.init = function (sio, socket) {
     gameSocket.on('endGame', endGame); // game ends in a game lobby
     gameSocket.on('correctGuess', correctGuess); // someone guessed right in a game lobby 
     gameSocket.on('updatePlayerList',updatePlayerList);
+    gameSocket.on('someoneGuessed',someoneGuessed);
 }
 
 function startRound(obj) {
-    io.sockets.in(obj.id).emit('roundInitated',obj.song,obj.options);
+    let x = obj.options.filter(elem => elem !== obj.song.name);
+    const max = x.length > 3 ? 3 : x.length;
+    io.sockets.in(obj.id).emit('roundInitated',obj.song,[obj.song.name ,..._.shuffle(x).splice(0,max)]);
 };
 
 function endGame(id) {
@@ -40,9 +43,12 @@ function correctGuess(id) {
 };
 
 function updatePlayerList(id,data){
-    console.log(data);
     io.sockets.in(id).emit('newPlayerList',data);
 };
+
+function someoneGuessed(id,name){
+    io.sockets.in(id).emit('someoneElse',name);
+}
 
 function hostCreateNewGame() {
     let id = uniqid();
@@ -59,14 +65,12 @@ function hostLeave(room) {
 };
 
 function playerJoinGame(id,name) {
-    console.log(name,'joining',id);
     try {
         let room = io.sockets.adapter.rooms[id.toString()];
 
         if (room) {
             this.join(id);
             io.sockets.in(id).emit('joined', id,name);
-            console.log(io.sockets.adapter.rooms);
         } else {
             this.emit('errorMessage', {
                 message: `This room ${id} does not exist.`
@@ -78,9 +82,7 @@ function playerJoinGame(id,name) {
 };
 
 let startGame = (obj) => {
-    // console.log(obj.type == 'admin')
     if (obj.type == 'admin'){
-        // console.log('EMITTING IN ' + obj.id);
         io.sockets.in(obj.id).emit('gameStarted');
     }
 };

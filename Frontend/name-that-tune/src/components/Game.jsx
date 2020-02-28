@@ -4,44 +4,44 @@ import GameLobby from './GameLobby';
 import CacheHandler from './interfaces/CacheHandler';
 import io from 'socket.io-client';
 import _ from 'lodash';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 const testendpoint = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 
 const socket = io.connect(testendpoint);
+let owner = JSON.parse(sessionStorage.getItem('Owner'));
 let propss;
 let roomID;
 let count = 0;
-let playlistID = 0;
+let playlistID = sessionStorage.getItem('playlistID') || 0;
 let playlist;
 let options = [];
 let players = [sessionStorage.getItem('username')];
+let ref;
 
 const leaveLobby = () => {
-    if (!!propss.location.state && propss.location.state.owner === true)
+    if (owner === true)
         socket.emit('hostLeave', sessionStorage.getItem('room'));
-    propss.history.push('/MainMenu');
-};
-
-const guessSong = () => {
-    let guess = sessionStorage.getItem('guessSong');
-    let currSong = JSON.parse(sessionStorage.getItem('song'));
-    console.log(guess, currSong.name);
-    if (guess == currSong.name) {
-        socket.emit('correctGuess', sessionStorage.getItem('room'));
+    else {
+        socket.emit('leave', sessionStorage.getItem('room'));
+        propss.history.push('/MainMenu');
     }
 };
 
 const startGame = () => {
-    if (!!propss.location.state && propss.location.state.owner == true) {
-        console.log('sending server startgame');
-        console.log(sessionStorage.getItem('room'));
+    if (owner === true) {
         socket.emit('startGame', { id: sessionStorage.getItem('room'), type: 'admin' });
     }
 }
 
+socket.on('someoneElse', (name) => {
+    if(name !== sessionStorage.getItem('username'))
+        NotificationManager.warning('Warning message', `${name} guess it correctly!`, 2000);
+});
+
 socket.on('roundEnd', () => {
-    if (!!propss.location.state && propss.location.state.owner === true) {
+    if (!!owner === true) {
         if (count >= playlist.length - 1)
             socket.emit('endGame', sessionStorage.getItem('room'));
         else {
@@ -52,19 +52,18 @@ socket.on('roundEnd', () => {
 });
 
 socket.on('joined', (id, user) => {
-    if (!!propss.location.state && propss.location.state.owner == true) {
+    if (owner === true) {
         socket.emit('updatePlayerList', sessionStorage.getItem('room'), [...players, user]);
     }
 });
 
 
 socket.on('gameEnded', () => {
-    console.log('host left');
     socket.emit('leave', sessionStorage.getItem('room'));
     count = 0;
     CacheHandler.removeCache('song');
     CacheHandler.removeCache('options');
-    propss.push('/MainMenu');
+    propss.history.push('/MainMenu');
 });
 
 
@@ -74,22 +73,21 @@ socket.on('playlistRequested', (data) => {
         options.push(element.name);
     });
     options = _.shuffle(options);
-    if (!!propss.location.state && propss.location.state.owner === true)
+    if (owner === true)
         socket.emit('startRound', { id: sessionStorage.getItem('room'), song: playlist[count], options: options });
 });
 
 socket.on('message', (data) => {
-    console.log('Incoming message:', data);
 });
 
 socket.on('gameStarted', () => {
-    console.log('gamestarted?');
-    if (!!propss.location.state && propss.location.state.owner === true)
+    if (owner === true)
         socket.emit('playlistRequest', { id: sessionStorage.getItem('room'), playlistID: playlistID });
 });
 
 socket.on('errorMessage', (data) => {
-    console.log(data);
+    console.log(data.message);
+    NotificationManager.error('Error message', data.message, 2000);
     propss.history.push('/MainMenu');
 });
 
@@ -99,18 +97,34 @@ const Game = (props) => {
     const [renderSwitch, setRenderSwitch] = React.useState(0);
     const [renderSwitch2, setRenderSwitch2] = React.useState(0);
 
+    const notifyFunc = (type, message) => {
+        switch (type) {
+            case 'info':
+                NotificationManager.info('Info message');
+                break;
+            case 'success':
+                NotificationManager.success('Success message', message, 3000);
+                break;
+            case 'warning':
+                NotificationManager.warning('Warning message', `${message} guess it correctly!`, 3000);
+                break;
+            case 'error':
+                NotificationManager.error('Error message', 'Click me!', 5000);
+                break;
+        }
+    }
+    
+
     React.useEffect(() => {
         propss = props;
-        console.log('mount');
+        owner = JSON.parse(sessionStorage.getItem('Owner'));
+        playlistID = sessionStorage.getItem('playlistID') || 0;
         if (!CacheHandler.verifyCache('logged-in') || !CacheHandler.verifyCache('inGame')) {
             props.history.push('/');
             return;
         }
-        if (!!props.location.state && props.location.state.owner === true) {
-            console.log('creating');
-            console.log(players);
+        if (owner === true) {
             CacheHandler.setCache('playerlist', JSON.stringify(players));
-            console.log(sessionStorage.getItem('playerlist'));
             socket.emit('create');
         }
         else {
@@ -122,31 +136,29 @@ const Game = (props) => {
     }, []);
 
     React.useEffect(() => () => {
-        console.log('unmounted');
+        if (owner === true) leaveLobby();
         CacheHandler.removeCache('song');
         CacheHandler.removeCache('options');
         CacheHandler.removeCache('inGame');
         CacheHandler.removeCache('room');
         CacheHandler.removeCache('playerlist');
+        CacheHandler.removeCache('Owner');
+        CacheHandler.removeCache('playlistID');
         socket.emit('terminate'); socket.disconnect(); socket.close();
     }, []);
 
     socket.on('newPlayerList', async (data) => {
         players = data;
         CacheHandler.setCache('playerlist', JSON.stringify(data));
-        console.log(sessionStorage.getItem('playerlist'), 'new players yoo');
         setRenderSwitch(renderSwitch + 1);
     });
 
     socket.on('roundInitated', (currSong, options) => {
-        console.log(sessionStorage.getItem('options'),options);
-        console.log('new round starting !');
         CacheHandler.setCache('song', JSON.stringify(currSong));
         CacheHandler.setCache('options', JSON.stringify(options));
         if (gameState === false) {
             setGameState(true);
         } else {
-            console.log('wow');
             setRenderSwitch2(renderSwitch2 + 1);
         }
     });
@@ -161,11 +173,16 @@ const Game = (props) => {
     socket.on('created', (data) => {
         roomID = data;
         CacheHandler.setCache('room', data);
-        console.log(sessionStorage.getItem('room'), data);
         setRenderSwitch(renderSwitch + 1);
     });
 
-    return gameState ? <GameSession socket={socket} guessSong={guessSong} leaveLobby={leaveLobby} /> : <GameLobby roomID={roomID} startGame={startGame} leaveLobby={leaveLobby} players={players} />;
+    return (
+        <div>{gameState ?
+            <GameSession socket={socket} notifyFunc={notifyFunc} leaveLobby={leaveLobby} /> :
+            <GameLobby roomID={roomID} startGame={startGame} leaveLobby={leaveLobby} players={players} />}
+            <NotificationContainer />
+        </div>
+    );
 
 }
 

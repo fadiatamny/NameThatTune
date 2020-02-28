@@ -8,14 +8,15 @@ import CustomControlls from './CustomControlls';
 import _ from 'lodash';
 
 const GameSession = (props) => {
+
   const song = JSON.parse(sessionStorage.getItem('song'));
   const url = `http://www.youtube.com/embed/${song.vid}?autoplay=1`;
 
   return (
     <div className="gues_that_song greenshade">
-      <Link to="./MainMenu" className="back_arrow">
+      <div className="back_arrow" onClick={props.leaveLobby} style={{cursor:'pointer'}}>
         <i className="fa fa-long-arrow-left"></i>
-      </Link>
+      </div>
 
       <div className="gues_that_song_area">
         <div className="gues_song">
@@ -41,7 +42,8 @@ const GameSession = (props) => {
                 <a href="#" key={index} onClick={() => {
                   let currSong = JSON.parse(sessionStorage.getItem('song'));
                   if (item === currSong.name) {
-                    console.log('correct choice !');
+                    props.notifyFunc('success','YOU GUESSED CORRECTLY !');
+                    props.socket.emit('someoneGuessed', sessionStorage.getItem('room'), sessionStorage.getItem('username'));
                     props.socket.emit('correctGuess', sessionStorage.getItem('room'));
                   }
                 }}>

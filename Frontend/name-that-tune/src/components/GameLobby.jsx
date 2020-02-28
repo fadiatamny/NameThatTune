@@ -37,9 +37,11 @@ const GameLobby = (props) => {
             </div>))}
         </div>
         <div className="start_game">
-          <button onClick={sessionStorage.getItem('room') ? props.startGame : refresh} className="btn-black start_game_btn">
-            State Game !
-                </button>
+          {JSON.parse(sessionStorage.getItem('Owner')) === true ?
+            <button onClick={sessionStorage.getItem('room') ? props.startGame : refresh} className="btn-black start_game_btn">
+              State Game !
+            </button>
+            : ''}
         </div>
       </div>
     </div>
