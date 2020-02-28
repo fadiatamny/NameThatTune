@@ -78,9 +78,9 @@ function playerJoinGame(id,name) {
 };
 
 let startGame = (obj) => {
-    console.log(obj.type == 'admin')
+    // console.log(obj.type == 'admin')
     if (obj.type == 'admin'){
-        console.log('EMITTING IN ' + obj.id);
+        // console.log('EMITTING IN ' + obj.id);
         io.sockets.in(obj.id).emit('gameStarted');
     }
 };

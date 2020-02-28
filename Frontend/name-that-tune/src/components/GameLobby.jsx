@@ -1,6 +1,5 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { HashLink as Link } from "react-router-hash-link";
 import "./fonts/fontawesome/css/font-awesome.min.css";
 import "../App.css";
 import "./css/game_lobby.css";
@@ -9,10 +8,11 @@ import "./css/responsive.css";
 
 function GameLobby(props) {
   let list = JSON.parse(sessionStorage.getItem('playerlist'));
-  if(list)
+  if (list)
     list = list.length >= props.players.length ? list : props.players;
   else
     list = props.players;
+
   return (
     <div className="game_loby greenshade">
       <div to="./MainMenu" onClick={props.leaveLobby} className="back_arrow">
@@ -24,15 +24,15 @@ function GameLobby(props) {
           <div className="blueshade"><p className='code justify-content-center'>{sessionStorage.getItem('room')}</p></div>
         </div>
         <div className="main_text">
-                <p>
+          <p>
             Get ready to guess some tunes!
                 </p>
         </div>
         <div className="d-flex game_users justify-content-center">
-          {list.map((item,index) => (
+          {list.map((item, index) => (
             <div key={index}>
-                <img src={require(`../components/images/userIcon.png`)} />
-                <p>{item}</p>
+              <img src={require(`../components/images/userIcon.png`)} />
+              <p>{item}</p>
             </div>))}
         </div>
         <div className="start_game">

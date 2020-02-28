@@ -8,7 +8,6 @@ import _ from 'lodash';
 const testendpoint = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 
-
 const socket = io.connect(testendpoint);
 let propss;
 let roomID;
@@ -24,15 +23,17 @@ function leaveLobby() {
     propss.history.push('/MainMenu');
 };
 
-let guessSong = (guess) => {
+let guessSong = () => {
+    let guess = sessionStorage.getItem('guessSong');
     let currSong = JSON.parse(sessionStorage.getItem('song'));
+    console.log(guess, currSong.name);
     if (guess == currSong.name) {
         socket.emit('correctGuess', sessionStorage.getItem('room'));
     }
 };
 
 let startGame = () => {
-    if (!!propss.location.state && propss.location.state.owner == true){
+    if (!!propss.location.state && propss.location.state.owner == true) {
         console.log('sending server startgame');
         console.log(sessionStorage.getItem('room'));
         socket.emit('startGame', { id: sessionStorage.getItem('room'), type: 'admin' });
@@ -50,9 +51,9 @@ socket.on('roundEnd', function () {
     }
 });
 
-socket.on('joined', (id,user) => {
-    if (!!propss.location.state && propss.location.state.owner == true){
-        socket.emit('updatePlayerList',sessionStorage.getItem('room'),[...players,user]);
+socket.on('joined', (id, user) => {
+    if (!!propss.location.state && propss.location.state.owner == true) {
+        socket.emit('updatePlayerList', sessionStorage.getItem('room'), [...players, user]);
     }
 });
 
@@ -96,6 +97,7 @@ socket.on('errorMessage', (data) => {
 function Game(props) {
     const [gameState, setGameState] = React.useState(false);
     const [renderSwitch, setRenderSwitch] = React.useState(0);
+    const [renderSwitch2, setRenderSwitch2] = React.useState(0);
 
     React.useEffect(() => {
         propss = props;
@@ -104,17 +106,18 @@ function Game(props) {
             props.history.push('/');
             return;
         }
-        if (!!props.location.state && props.location.state.owner === true){
+        if (!!props.location.state && props.location.state.owner === true) {
             console.log('creating');
-            sessionStorage.setItem('playerlist',JSON.stringify(players));
+            console.log(players);
+            sessionStorage.setItem('playerlist', JSON.stringify(players));
             console.log(sessionStorage.getItem('playerlist'));
             socket.emit('create');
         }
-        else{
-            let room = ''+window.location.href.split('/Game/')[1];
+        else {
+            let room = '' + window.location.href.split('/Game/')[1];
             let user = sessionStorage.getItem('username');
-            sessionStorage.setItem('room',room);
-            socket.emit('join', room,user);
+            sessionStorage.setItem('room', room);
+            socket.emit('join', room, user);
         }
     }, []);
 
@@ -128,19 +131,22 @@ function Game(props) {
         socket.emit('terminate'); socket.disconnect(); socket.close();
     }, []);
 
-    socket.on('newPlayerList',async function(data){
+    socket.on('newPlayerList', async function (data) {
         players = data;
-        sessionStorage.setItem('playerlist',JSON.stringify(data));
-        console.log(sessionStorage.getItem('playerlist'),'new players yoo');
+        sessionStorage.setItem('playerlist', JSON.stringify(data));
+        console.log(sessionStorage.getItem('playerlist'), 'new players yoo');
         setRenderSwitch(renderSwitch + 1);
     });
 
     socket.on('roundInitated', (currSong, options) => {
-        console.log('round starting yoo');
+        console.log('new round starting !');
         sessionStorage.setItem('song', JSON.stringify(currSong));
         sessionStorage.setItem('options', JSON.stringify(options));
         if (gameState === false) {
             setGameState(true);
+        } else {
+            console.log('wow');
+            setRenderSwitch2(renderSwitch2 + 1);
         }
     });
 
@@ -151,12 +157,12 @@ function Game(props) {
 
     socket.on('created', (data) => {
         roomID = data;
-        sessionStorage.setItem('room',data);
-        console.log(sessionStorage.getItem('room'),data);
-        setRenderSwitch(renderSwitch+1);
+        sessionStorage.setItem('room', data);
+        console.log(sessionStorage.getItem('room'), data);
+        setRenderSwitch(renderSwitch + 1);
     });
 
-    return gameState ? <GameSession guessSong={guessSong} leaveLobby={leaveLobby} /> : <GameLobby roomID={roomID} startGame={startGame} leaveLobby={leaveLobby} players={players} />;
+    return gameState ? <GameSession socket={socket} guessSong={guessSong} leaveLobby={leaveLobby} /> : <GameLobby roomID={roomID} startGame={startGame} leaveLobby={leaveLobby} players={players} />;
 
 }
 
