@@ -5,13 +5,14 @@ import "../App.css";
 import "./css/game_lobby.css";
 import "./css/responsive.css";
 
-
-function GameLobby(props) {
+const GameLobby = (props) => {
   let list = JSON.parse(sessionStorage.getItem('playerlist'));
   if (list)
     list = list.length >= props.players.length ? list : props.players;
   else
     list = props.players;
+
+  const refresh = () => { window.location.reload(); };
 
   return (
     <div className="game_loby greenshade">
@@ -36,7 +37,7 @@ function GameLobby(props) {
             </div>))}
         </div>
         <div className="start_game">
-          <button onClick={props.startGame} className="btn-black start_game_btn">
+          <button onClick={sessionStorage.getItem('room') ? props.startGame : refresh} className="btn-black start_game_btn">
             State Game !
                 </button>
         </div>

@@ -5,8 +5,9 @@ import { HashLink as Link } from "react-router-hash-link";
 import { Media, Player } from 'react-media-player';
 import "./css/guess_song.css";
 import CustomControlls from './CustomControlls';
+import _ from 'lodash';
 
-function GameSession(props) {
+const GameSession = (props) => {
   const song = JSON.parse(sessionStorage.getItem('song'));
   const url = `http://www.youtube.com/embed/${song.vid}?autoplay=1`;
 
@@ -20,13 +21,13 @@ function GameSession(props) {
         <div className="gues_song">
           <Media vendor={'youtube'} autoPlay={true}>
             <div className="media">
-              <div className="media-player" style={{display: 'none'}}>
+              <div className="media-player" style={{ display: 'none' }}>
                 <Player src={url} autoPlay={true} />
               </div>
               <div className="media-controls">
-              <img
-              src={require("../components/images/voice_message.png")}
-              />
+                <img
+                  src={require("../components/images/voice_message.png")}
+                />
                 <CustomControlls />
               </div>
             </div>
@@ -36,14 +37,14 @@ function GameSession(props) {
         <div className="songs_area">
           <div className="d-flex justify-content-center">
             {
-              JSON.parse(sessionStorage.getItem('options')).map((item, index) => (
-                <a href="#" key={index} onClick={()=>{    
-                  let currSong = JSON.parse(sessionStorage.getItem('song'));    
+              _.shuffle(JSON.parse(sessionStorage.getItem('options'))).map((item, index) => (
+                <a href="#" key={index} onClick={() => {
+                  let currSong = JSON.parse(sessionStorage.getItem('song'));
                   if (item === currSong.name) {
                     console.log('correct choice !');
                     props.socket.emit('correctGuess', sessionStorage.getItem('room'));
                   }
-                  }}>
+                }}>
                   <i className="fa fa-heart-o"></i>
                   <br />
                   {item}

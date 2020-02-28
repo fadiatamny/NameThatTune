@@ -51,7 +51,7 @@ class Playlist {
     static async create(req, res) {
         try {
             let playlist = PlaylistModel({
-                id: req.params.id,
+                id: req.body.id,
                 name: req.body.playlistName
             });
 

@@ -17,13 +17,13 @@ let playlist;
 let options = [];
 let players = [sessionStorage.getItem('username')];
 
-function leaveLobby() {
+const leaveLobby = () => {
     if (!!propss.location.state && propss.location.state.owner === true)
         socket.emit('hostLeave', sessionStorage.getItem('room'));
     propss.history.push('/MainMenu');
 };
 
-let guessSong = () => {
+const guessSong = () => {
     let guess = sessionStorage.getItem('guessSong');
     let currSong = JSON.parse(sessionStorage.getItem('song'));
     console.log(guess, currSong.name);
@@ -32,7 +32,7 @@ let guessSong = () => {
     }
 };
 
-let startGame = () => {
+const startGame = () => {
     if (!!propss.location.state && propss.location.state.owner == true) {
         console.log('sending server startgame');
         console.log(sessionStorage.getItem('room'));
@@ -40,7 +40,7 @@ let startGame = () => {
     }
 }
 
-socket.on('roundEnd', function () {
+socket.on('roundEnd', () => {
     if (!!propss.location.state && propss.location.state.owner === true) {
         if (count >= playlist.length - 1)
             socket.emit('endGame', sessionStorage.getItem('room'));
@@ -58,12 +58,12 @@ socket.on('joined', (id, user) => {
 });
 
 
-socket.on('gameEnded', function () {
+socket.on('gameEnded', () => {
     console.log('host left');
     socket.emit('leave', sessionStorage.getItem('room'));
     count = 0;
-    sessionStorage.removeItem('song');
-    sessionStorage.removeItem('options');
+    CacheHandler.removeCache('song');
+    CacheHandler.removeCache('options');
     propss.push('/MainMenu');
 });
 
@@ -78,7 +78,7 @@ socket.on('playlistRequested', (data) => {
         socket.emit('startRound', { id: sessionStorage.getItem('room'), song: playlist[count], options: options });
 });
 
-socket.on('message', function (data) {
+socket.on('message', (data) => {
     console.log('Incoming message:', data);
 });
 
@@ -94,7 +94,7 @@ socket.on('errorMessage', (data) => {
 });
 
 
-function Game(props) {
+const Game = (props) => {
     const [gameState, setGameState] = React.useState(false);
     const [renderSwitch, setRenderSwitch] = React.useState(0);
     const [renderSwitch2, setRenderSwitch2] = React.useState(0);
@@ -109,39 +109,40 @@ function Game(props) {
         if (!!props.location.state && props.location.state.owner === true) {
             console.log('creating');
             console.log(players);
-            sessionStorage.setItem('playerlist', JSON.stringify(players));
+            CacheHandler.setCache('playerlist', JSON.stringify(players));
             console.log(sessionStorage.getItem('playerlist'));
             socket.emit('create');
         }
         else {
             let room = '' + window.location.href.split('/Game/')[1];
             let user = sessionStorage.getItem('username');
-            sessionStorage.setItem('room', room);
+            CacheHandler.setCache('room', room);
             socket.emit('join', room, user);
         }
     }, []);
 
     React.useEffect(() => () => {
         console.log('unmounted');
-        sessionStorage.removeItem('song');
-        sessionStorage.removeItem('options');
-        sessionStorage.removeItem('inGame');
-        sessionStorage.removeItem('room');
-        sessionStorage.removeItem('playerlist');
+        CacheHandler.removeCache('song');
+        CacheHandler.removeCache('options');
+        CacheHandler.removeCache('inGame');
+        CacheHandler.removeCache('room');
+        CacheHandler.removeCache('playerlist');
         socket.emit('terminate'); socket.disconnect(); socket.close();
     }, []);
 
-    socket.on('newPlayerList', async function (data) {
+    socket.on('newPlayerList', async (data) => {
         players = data;
-        sessionStorage.setItem('playerlist', JSON.stringify(data));
+        CacheHandler.setCache('playerlist', JSON.stringify(data));
         console.log(sessionStorage.getItem('playerlist'), 'new players yoo');
         setRenderSwitch(renderSwitch + 1);
     });
 
     socket.on('roundInitated', (currSong, options) => {
+        console.log(sessionStorage.getItem('options'),options);
         console.log('new round starting !');
-        sessionStorage.setItem('song', JSON.stringify(currSong));
-        sessionStorage.setItem('options', JSON.stringify(options));
+        CacheHandler.setCache('song', JSON.stringify(currSong));
+        CacheHandler.setCache('options', JSON.stringify(options));
         if (gameState === false) {
             setGameState(true);
         } else {
@@ -152,12 +153,14 @@ function Game(props) {
 
     socket.on('sessionEnded', () => {
         count = 0;
+        CacheHandler.removeCache('options');
+        CacheHandler.removeCache('song');
         setGameState(false);
     });
 
     socket.on('created', (data) => {
         roomID = data;
-        sessionStorage.setItem('room', data);
+        CacheHandler.setCache('room', data);
         console.log(sessionStorage.getItem('room'), data);
         setRenderSwitch(renderSwitch + 1);
     });

@@ -8,7 +8,11 @@ export default class CacheHandler{
         return sessionStorage.getItem(key) !== null;
     };
 
+    static removeCache(key){
+        sessionStorage.removeItem(key);
+    };
+
     static clearCache(){
         sessionStorage.clear();
-    }
+    };
 }

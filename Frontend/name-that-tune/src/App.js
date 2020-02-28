@@ -6,9 +6,8 @@ import Login from './components/Login';
 import MainMenu from './components/MainMenu';
 import Signup from './components/Signup';
 import Game from './components/Game';
-import Chat from './components/Chat';
-import ReadChat from './components/Read_chat';
 import ErrorComponent from './components/ErrorComponent';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
@@ -28,9 +27,8 @@ function App() {
           <Route path="/signup" component={Signup} />
           <Route path="/MainMenu" component={MainMenu} />
           <Route path="/Game" component={Game} />
-          {/* <Route path="/plc" component={Chat} />
-          <Route path="/plc_details" component={ReadChat} />
-          <Route component={ErrorComponent} /> */}
+          <Route path="/Dashboard" component={Dashboard} />
+          {/* <Route component={ErrorComponent} /> */}
         </div>
       </Router>
       

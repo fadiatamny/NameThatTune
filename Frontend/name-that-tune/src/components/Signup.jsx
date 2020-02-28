@@ -8,11 +8,12 @@ import "./css/signup.css";
 import "./css/responsive.css";
 import Axios from 'axios';
 import CacheHandler from './interfaces/CacheHandler';
+import sha256 from 'sha256';
 
 const testendpoint = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 
-function Signup(props) {
+const Signup = (props) => {
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState();
@@ -22,19 +23,19 @@ function Signup(props) {
       props.history.push('/MainMenu');
   }, []);
 
-  function formChange(e) {
+  const formChange = (e) => {
     if (e.target.name === 'username')
       setUserName(e.target.value);
     if (e.target.name === 'password')
       setPassword(e.target.value);
   };
 
-  async function submitForm(e) {
+  const submitForm = async (e) => {
     e.preventDefault();
     try {
       await Axios.post(`${testendpoint}/api/signup`, {
         "id": userName,
-        "password": password
+        "password": sha256(password)
       });
 
       CacheHandler.setCache('logged-in', true);

@@ -8,23 +8,23 @@ import "./css/responsive.css";
 import CacheHandler from './interfaces/CacheHandler';
 import { Modal, Button } from 'react-bootstrap';
 
-function MainMenu(props) {
+const MainMenu = (props) => {
 
   let room = '';
   const [modalShow, setModalShow] = React.useState(false);
 
   React.useEffect(() => {
-    if (!CacheHandler.verifyCache('logged-in'))
+    if (!CacheHandler.verifyCache('logged-in') || CacheHandler.verifyCache('Admin'))
       props.history.push('/');
   }, []);
 
-  function logOut() {
+  const logOut = () => {
     CacheHandler.clearCache();
     props.history.push('/');
   };
 
-  function joinRoom(){
-    sessionStorage.setItem('inGame', true);
+  const joinRoom = () => {
+    CacheHandler.setCache('inGame', true);
     props.history.push(`/Game/${room}`);
   }
 
@@ -34,23 +34,23 @@ function MainMenu(props) {
         <div className="select_join_area redshade box-shadow">
           <div className="logo_mini">
             <img
-              src={require("../components/images//logo.png")}
+              src={require("../components/images/logo.png")}
               alt="GameApp Logo"
             />
           </div>
           <div className="create_room">
-            <Link onClick={() => { sessionStorage.setItem('inGame', true); }} to={{ pathname: "./Game", state: { owner: true } }}>Create Room</Link>
+            <Link onClick={() => { CacheHandler.setCache('inGame', true); }} to={{ pathname: "./Game", state: { owner: true } }}>Create Room</Link>
           </div>
           <div className="join_room">
-            {/* <Link onClick={() => { sessionStorage.setItem('inGame', true); }} room={room} to={{ pathname: "./Game", state: { user: true } }}>Join Room</Link> */}
-              <a href="#" className="join_room" onClick={() => setModalShow(true)}>
-                Join Room
+            <a href="#" className="join_room" onClick={() => setModalShow(true)}>
+              Join Room
               </a>
-              <MyVerticallyCenteredModal
-                show={modalShow}
-                onHide={(e) => {setModalShow(false); joinRoom();}}
-                onChange={(e)=>{ room = e.target.value;}}
-              />
+            <MyVerticallyCenteredModal
+              show={modalShow}
+              onHide={(e) => { setModalShow(false); if(room != '') joinRoom(); }}
+              onChange={(e) => { room = e.target.value; }}
+              closemodal={setModalShow}
+            />
           </div>
         </div>
       </div>
@@ -62,9 +62,6 @@ function MainMenu(props) {
   );
 }
 
-export default MainMenu;
-
-
 function MyVerticallyCenteredModal(props) {
   return (
     <Modal
@@ -73,15 +70,14 @@ function MyVerticallyCenteredModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
-      </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="orangeshade">
         <label htmlFor="recipient-name" className="col-form-label">Room ID :</label>
         <input type="text" className="form-control" id="recipient-name" onChange={props.onChange} />
+        <Button onClick={props.onHide} style={{ float: 'right', marginTop: 10 }}>Join</Button>
+        <Button onClick={()=>{props.closemodal(false)}} style={{ float: 'right', marginTop: 10 , marginRight: 5}}>Close</Button>
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Join</Button>
-      </Modal.Footer>
     </Modal>
   );
 }
+
+export default MainMenu;

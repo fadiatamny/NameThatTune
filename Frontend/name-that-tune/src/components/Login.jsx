@@ -10,18 +10,20 @@ import CacheHandler from './interfaces/CacheHandler';
 const testendpoint = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 
-function Login(props) {
+const Login = (props) => {
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [text, setText] = React.useState(<div>Log in <br />to continue.</div>);
   const red = { color: 'red' };
 
   React.useEffect(() => {
-    if (CacheHandler.verifyCache('logged-in'))
+    if (CacheHandler.verifyCache('Admin'))
+      props.history.push('/Dashboard');
+    else if (CacheHandler.verifyCache('logged-in'))
       props.history.push('/MainMenu');
   }, []);
 
-  async function verify(e) {
+  const verify = async (e) => {
     if (e) { e.preventDefault(); }
     try {
       await Axios.post(`${testendpoint}/api/login`, {
@@ -31,14 +33,20 @@ function Login(props) {
       CacheHandler.setCache('logged-in', true);
       CacheHandler.setCache('username', userName);
 
-      props.history.push('/MainMenu');
+      if (userName === 'admin') {
+        CacheHandler.setCache('Admin', true);
+        props.history.push('/Dashboard');
+      } else {
+        props.history.push('/MainMenu');
+      }
+
     } catch (err) {
       console.log(err);
       setText(<div>Log in <br />to continue. <br /> <span style={red}>Please Retry!</span></div>);
     }
   };
 
-  function formChange(e) {
+  const formChange = (e) => {
     if (e.target.name === 'username')
       setUserName(e.target.value);
     if (e.target.name === 'password')
@@ -66,7 +74,7 @@ function Login(props) {
                   name="username"
                   onChange={formChange}
                   className="redshade box-shadow"
-                  placeholder="hristov123@gmail.com"
+                  placeholder="example@email.com"
                 />
               </li>
               <li className="password">

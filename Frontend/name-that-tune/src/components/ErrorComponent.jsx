@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ErrorComponent() {
+const ErrorComponent = () => {
     return (
         <div>
             <p>ERRORRR</p>
