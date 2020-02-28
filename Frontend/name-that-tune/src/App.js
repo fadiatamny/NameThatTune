@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, BrowserRouter as Router} from "react-router-dom";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 import './App.css';
 import MetaTags from 'react-meta-tags';
 import Login from './components/Login';
@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <MetaTags>
-        <title>GameApp</title>
+        <title> Name That Tune </title>
         <meta charSet="utf-8" />
         <meta
           name="viewport"
@@ -31,7 +31,7 @@ function App() {
           {/* <Route component={ErrorComponent} /> */}
         </div>
       </Router>
-      
+
     </div>
   );
 }

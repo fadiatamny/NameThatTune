@@ -26,7 +26,7 @@ const Login = (props) => {
   const verify = async (e) => {
     if (e) { e.preventDefault(); }
     try {
-      await Axios.post(`${testendpoint}/api/login`, {
+      await Axios.post(`${endpoint}/api/login`, {
         "id": userName,
         "password": password
       });

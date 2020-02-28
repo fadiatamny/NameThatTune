@@ -27,7 +27,7 @@ const Dashboard = (props) => {
             props.history.push('/');
         }
         else {
-            Axios.get(`${testendpoint}/playlist/`)
+            Axios.get(`${endpoint}/playlist/`)
                 .then(res => setPlaylists(res.data))
                 .catch(err => console.log(err));
         }
@@ -40,7 +40,7 @@ const Dashboard = (props) => {
 
     const refresh = async () => {
         try {
-            let res = await Axios.get(`${testendpoint}/playlist/`);
+            let res = await Axios.get(`${endpoint}/playlist/`);
             setPlaylists(res.data);
             setSelectedPlaylist({});
         } catch (err) {
@@ -50,7 +50,7 @@ const Dashboard = (props) => {
 
     const insertPlaylist = async () => {
         try {
-            await Axios.post(`${testendpoint}/playlist`, playlist);
+            await Axios.post(`${endpoint}/playlist`, playlist);
             refresh();
         } catch (err) {
             console.log(err);

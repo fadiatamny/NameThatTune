@@ -5,9 +5,14 @@ const chalk = require('chalk');
 const songsRouter = require('./routers/songsRouter');
 const playlistRouter = require('./routers/playlistRouter');
 const apiRouter = require('./routers/apiRouter');
+const path = require('path');
+const cors = require('cors');
 
 const app = express();
 
+app.use(express.static(path.resolve(__dirname, "build")));
+
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({
     extended: false
@@ -35,6 +40,10 @@ app.use(morganMiddleware);
 app.use('/api', apiRouter);
 app.use('/playlist', playlistRouter);
 app.use('/songs', songsRouter);
+
+app.use('/',(req,res,next)=>{
+    res.sendFile(path.join(__dirname,'HTML','index.html'));
+});
 
 app.all('*', (req, res) => {
     res.status(404).send('Page Not Found!');

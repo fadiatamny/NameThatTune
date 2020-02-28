@@ -106,7 +106,7 @@ function ChoiceModal(props) {
   const [playlist, setPlaylist] = React.useState([]);
 
   React.useEffect(() => {
-    Axios.get(`${testendpoint}/playlist`)
+    Axios.get(`${endpoint}/playlist`)
       .then(res => setPlaylist(res.data))
       .catch(err => console.log(err));
   }, []);

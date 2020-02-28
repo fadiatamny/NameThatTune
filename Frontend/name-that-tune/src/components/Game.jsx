@@ -9,7 +9,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 const testendpoint = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 
-const socket = io.connect(testendpoint);
+const socket = io.connect(endpoint);
 let owner = JSON.parse(sessionStorage.getItem('Owner'));
 let propss;
 let roomID;
