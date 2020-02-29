@@ -9,7 +9,7 @@ import CacheHandler from './interfaces/CacheHandler';
 import { Modal, Button } from 'react-bootstrap';
 import Axios from 'axios';
 
-const testendpoint = 'http://localhost:1337';
+const localhostplace = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 
 const MainMenu = (props) => {
@@ -106,7 +106,7 @@ function ChoiceModal(props) {
   const [playlist, setPlaylist] = React.useState([]);
 
   React.useEffect(() => {
-    Axios.get(`${endpoint}/playlist`)
+    Axios.get(`${localhostplace}/playlist`)
       .then(res => setPlaylist(res.data))
       .catch(err => console.log(err));
   }, []);

@@ -10,7 +10,7 @@ import Axios from 'axios';
 import CacheHandler from './interfaces/CacheHandler';
 import sha256 from 'sha256';
 
-const testendpoint = 'http://localhost:1337';
+const localhostplace = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 
 const Signup = (props) => {
@@ -33,7 +33,7 @@ const Signup = (props) => {
   const submitForm = async (e) => {
     e.preventDefault();
     try {
-      await Axios.post(`${endpoint}/api/signup`, {
+      await Axios.post(`${localhostplace}/api/signup`, {
         "id": userName,
         "password": sha256(password)
       });

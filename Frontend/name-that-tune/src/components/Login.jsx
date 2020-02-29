@@ -7,7 +7,7 @@ import logo from "../components/images/logo.png";
 import Axios from 'axios';
 import CacheHandler from './interfaces/CacheHandler';
 
-const testendpoint = 'http://localhost:1337';
+const localhostplace = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 
 const Login = (props) => {
@@ -26,7 +26,7 @@ const Login = (props) => {
   const verify = async (e) => {
     if (e) { e.preventDefault(); }
     try {
-      await Axios.post(`${endpoint}/api/login`, {
+      await Axios.post(`${localhostplace}/api/login`, {
         "id": userName,
         "password": password
       });

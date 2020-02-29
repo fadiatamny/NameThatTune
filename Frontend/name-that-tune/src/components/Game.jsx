@@ -6,10 +6,10 @@ import io from 'socket.io-client';
 import _ from 'lodash';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 
-const testendpoint = 'http://localhost:1337';
+const localhostplace = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 
-const socket = io.connect(endpoint);
+const socket = io.connect(localhostplace);
 let owner = JSON.parse(sessionStorage.getItem('Owner'));
 let propss;
 let roomID;
@@ -77,7 +77,9 @@ socket.on('playlistRequested', (data) => {
         socket.emit('startRound', { id: sessionStorage.getItem('room'), song: playlist[count], options: options });
 });
 
-socket.on('message', (data) => {
+socket.on('message', (name,message) => {
+    if(name !== sessionStorage.getItem('username'))
+        NotificationManager.info('Incomming message', `${name}: ${message}`, 5000);
 });
 
 socket.on('gameStarted', () => {
@@ -86,7 +88,6 @@ socket.on('gameStarted', () => {
 });
 
 socket.on('errorMessage', (data) => {
-    console.log(data.message);
     NotificationManager.error('Error message', data.message, 2000);
     propss.history.push('/MainMenu');
 });
@@ -179,7 +180,7 @@ const Game = (props) => {
     return (
         <div>{gameState ?
             <GameSession socket={socket} notifyFunc={notifyFunc} leaveLobby={leaveLobby} /> :
-            <GameLobby roomID={roomID} startGame={startGame} leaveLobby={leaveLobby} players={players} />}
+            <GameLobby socket={socket} roomID={roomID} startGame={startGame} leaveLobby={leaveLobby} players={players} />}
             <NotificationContainer />
         </div>
     );

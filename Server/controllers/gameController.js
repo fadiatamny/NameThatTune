@@ -26,6 +26,7 @@ module.exports.init = function (sio, socket) {
     gameSocket.on('correctGuess', correctGuess); // someone guessed right in a game lobby 
     gameSocket.on('updatePlayerList',updatePlayerList);
     gameSocket.on('someoneGuessed',someoneGuessed);
+    gameSocket.on('sendMessage',sendMessage);
 }
 
 function startRound(obj) {
@@ -37,6 +38,10 @@ function startRound(obj) {
 function endGame(id) {
     io.sockets.in(id).emit('sessionEnded');
 };
+
+function sendMessage(id,name,message){
+    io.sockets.in(id).emit('message',name,message);
+}
 
 function correctGuess(id) {
     io.sockets.in(id).emit('roundEnd');

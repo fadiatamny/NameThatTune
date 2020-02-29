@@ -11,7 +11,7 @@ import PlaylistComponent from './PlaylistComponent';
 import { Modal, Button } from 'react-bootstrap';
 
 
-const testendpoint = 'http://localhost:1337';
+const localhostplace = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 
 const Dashboard = (props) => {
@@ -27,7 +27,7 @@ const Dashboard = (props) => {
             props.history.push('/');
         }
         else {
-            Axios.get(`${endpoint}/playlist/`)
+            Axios.get(`${localhostplace}/playlist/`)
                 .then(res => setPlaylists(res.data))
                 .catch(err => console.log(err));
         }
@@ -40,7 +40,7 @@ const Dashboard = (props) => {
 
     const refresh = async () => {
         try {
-            let res = await Axios.get(`${endpoint}/playlist/`);
+            let res = await Axios.get(`${localhostplace}/playlist/`);
             setPlaylists(res.data);
             setSelectedPlaylist({});
         } catch (err) {
@@ -50,7 +50,7 @@ const Dashboard = (props) => {
 
     const insertPlaylist = async () => {
         try {
-            await Axios.post(`${endpoint}/playlist`, playlist);
+            await Axios.post(`${localhostplace}/playlist`, playlist);
             refresh();
         } catch (err) {
             console.log(err);

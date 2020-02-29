@@ -66,6 +66,44 @@
     text-align: center;
 }
 
+.chat-box-field{
+    width:60vw;
+    border-radius:15px; 
+    height:10vh;
+    margin-left:20vw; 
+    margin-top:10%;
+}
+
+.chat-box-field input{
+    width: 80%;
+    margin: 15px 0;
+    display: inline-block;
+}
+
+.chat-box-field .send-message{
+    font-size: 25px;
+    margin-left: 10px;
+    margin-top: 8%;
+}
+
 @media screen and (max-width:1024px) {
     .game_loby{padding-bottom: 50px;}
+}
+
+@media screen and (max-width:1024px) {
+    .chat-box-field{
+        width: 60vw;
+        margin-left: 20vw;
+    }
+}
+
+@media screen and (max-width:767px) {
+    .chat-box-field{
+        width: 80vw;
+        margin-left: 10%;
+    }
+
+    .chat-box-field input{
+        width: 80%;
+    }
 }

@@ -4,6 +4,8 @@ import "./fonts/fontawesome/css/font-awesome.min.css";
 import "../App.css";
 import "./css/game_lobby.css";
 import "./css/responsive.css";
+import { FaLocationArrow } from 'react-icons/fa';
+
 
 const GameLobby = (props) => {
   let list = JSON.parse(sessionStorage.getItem('playerlist'));
@@ -12,8 +14,14 @@ const GameLobby = (props) => {
   else
     list = props.players;
 
-  const refresh = () => { window.location.reload(); };
+  let message = '';
+  
+  const sendMessage = () => {
+    props.socket.emit('sendMessage',sessionStorage.getItem('room'),sessionStorage.getItem('username'),message);
+  };
 
+  const refresh = () => { window.location.reload(); };
+  
   return (
     <div className="game_loby greenshade">
       <div to="./MainMenu" onClick={props.leaveLobby} className="back_arrow">
@@ -42,6 +50,12 @@ const GameLobby = (props) => {
               State Game !
             </button>
             : ''}
+        </div>
+      </div>
+      <div>
+        <div className="chat-box-field d-flex blueshade justify-content-center">
+          <input name="name" type="text" className="form-control" id="recipient-name" onChange={e => message = e.target.value} />
+          <FaLocationArrow className="send-message" style={{fontSize:25,marginLeft:10, marginTop: '8%'}} onClick={sendMessage}/>
         </div>
       </div>
     </div>
