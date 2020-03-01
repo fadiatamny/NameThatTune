@@ -41,18 +41,18 @@ const MainMenu = (props) => {
   };
 
   return (
-    <div className="select_join_room">
-      <div className="select_join">
-        <div className="select_join_area redshade box-shadow">
+    <div className="menu">
+      <div className="menu-area">
+        <div className="menu-box redshade box-shadow">
           <div className="logo_mini">
             <img
               src={require("../components/images/logo.png")}
               alt="GameApp Logo"
             />
           </div>
-          <div className="create_room">
+          <div className="option-select">
             {/* <Link onClick={() => { CacheHandler.setCache('inGame', true); }} to={{ pathname: "./Game", state: { owner: true } }}>Create Room</Link> */}
-            <a href="#" className="join_room" onClick={() => setChoiceModal(true)}>
+            <a href="#" className="option-select" onClick={() => setChoiceModal(true)}>
               Create Room
               </a>
             <ChoiceModal
@@ -63,8 +63,8 @@ const MainMenu = (props) => {
               closemodal={setChoiceModal}
             />
           </div>
-          <div className="join_room">
-            <a href="#" className="join_room" onClick={() => setModalShow(true)}>
+          <div className="option-select">
+            <a href="#" className="option-select" onClick={() => setModalShow(true)}>
               Join Room
               </a>
             <MainModal

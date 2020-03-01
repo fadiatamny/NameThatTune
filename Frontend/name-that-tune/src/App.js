@@ -6,8 +6,8 @@ import Login from './components/Login';
 import MainMenu from './components/MainMenu';
 import Signup from './components/Signup';
 import Game from './components/Game';
-import ErrorComponent from './components/ErrorComponent';
 import Dashboard from './components/Dashboard';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
           {/* <Route component={ErrorComponent} /> */}
         </div>
       </Router>
-
+      <NotificationContainer />
     </div>
   );
 }

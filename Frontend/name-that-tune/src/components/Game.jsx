@@ -4,7 +4,7 @@ import GameLobby from './GameLobby';
 import CacheHandler from './interfaces/CacheHandler';
 import io from 'socket.io-client';
 import _ from 'lodash';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationManager } from 'react-notifications';
 
 const localhostplace = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
@@ -18,7 +18,6 @@ let playlistID = sessionStorage.getItem('playlistID') || 0;
 let playlist;
 let options = [];
 let players = [sessionStorage.getItem('username')];
-let ref;
 
 const leaveLobby = () => {
     if (owner === true)
@@ -181,7 +180,6 @@ const Game = (props) => {
         <div>{gameState ?
             <GameSession socket={socket} notifyFunc={notifyFunc} leaveLobby={leaveLobby} /> :
             <GameLobby socket={socket} roomID={roomID} startGame={startGame} leaveLobby={leaveLobby} players={players} />}
-            <NotificationContainer />
         </div>
     );
 

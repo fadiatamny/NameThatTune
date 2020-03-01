@@ -1,7 +1,6 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./fonts/fontawesome/css/font-awesome.min.css";
-import { HashLink as Link } from "react-router-hash-link";
 import { Media, Player } from 'react-media-player';
 import "./css/guess_song.css";
 import "./css/game_lobby.css";

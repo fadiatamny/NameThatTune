@@ -3,9 +3,9 @@ import CacheHandler from './interfaces/CacheHandler';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./fonts/fontawesome/css/font-awesome.min.css";
 import "./css/style.css";
-import "./css/chat.css";
+import "./css/dashboard.css";
 import Axios from 'axios';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaMinus } from 'react-icons/fa';
 import Moment from 'react-moment';
 import PlaylistComponent from './PlaylistComponent';
 import { Modal, Button } from 'react-bootstrap';
@@ -49,6 +49,8 @@ const Dashboard = (props) => {
     };
 
     const insertPlaylist = async () => {
+        if (isNaN(playlist.id)) return;
+
         try {
             await Axios.post(`${localhostplace}/playlist`, playlist);
             refresh();
@@ -61,17 +63,25 @@ const Dashboard = (props) => {
         setSelectedPlaylist(item);
     };
 
-    return (
-        <div className="chat greenshade">
-            <a onClick={logout} className="back_arrow">
-                <img src={require("../components/images/navi-chat1.png")} />
-            </a>
-            <div className="chat_area">
-                <div className="chat_users">
+    const deletePlaylist = async (id) => {
+        try {
+            await Axios.delete(`${localhostplace}/playlist/${id}`);
+            refresh();
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
+    return (
+        <div className="dashboard greenshade">
+            <a onClick={logout} className="back_arrow">
+                <img src={require("../components/images/leave-admin.png")} />
+            </a>
+            <div className="dashboard_area">
+                <div className="dashboard_playlists">
                     <div className="title_page">
                         <div>
-                            {playlists.length > 0 ?<span style={{ marginRight: 15 }}>Playlists </span> : <span style={{ marginRight: 15 }}>No Playlists </span>}
+                            {playlists.length > 0 ? <span style={{ marginRight: 15 }}>Playlists </span> : <span style={{ marginRight: 15 }}>No Playlists </span>}
                             <FaPlus className='insert-icon' onClick={() => setModalShow(true)} />
                             <MainModal
                                 show={modalShow}
@@ -83,14 +93,13 @@ const Dashboard = (props) => {
                                 closemodal={setModalShow}
                             />
                         </div>
-                            
                     </div>
-
-                    <ul className="chats">
+                    <ul className="dashboards">
                         {playlists.map((item, index) => (
                             <li key={item.id}>
                                 <a href="" onClick={(e) => { e.preventDefault(); setCurrent(item); }}>
                                     <div className="name" style={index === 0 ? { marginTop: 15 } : {}} style={index + 1 >= playlists.length ? { marginTop: 5, marginBottom: 15 } : {}}>
+                                        <FaMinus className='insert-icon' style={{ float: 'right', marginRight: '3vw', marginTop: '1vh' }} onClick={() => { deletePlaylist(item.id); }} />
                                         <span className="username">{item.name}</span>
                                         <div className="desc">Number of songs: {item.songs.length} <br /><br /> Created At: <Moment format="DD/MM/YY HH:mm">{item.createdAt}</Moment></div>
                                         {index + 1 !== playlists.length ? <div className="seperator"></div> : ''}
@@ -117,10 +126,10 @@ function MainModal(props) {
         >
             <Modal.Body className="orangeshade">
                 <label htmlFor="recipient-id" className="col-form-label">Playlist ID :</label>
-                <input name="id" type="text" className="form-control" id="recipient-id" onChange={props.onChange} />
+                <input name="id" type="text" className="form-control" id="recipient-id" placeholder="1234" onChange={props.onChange} />
                 <label htmlFor="recipient-name" className="col-form-label">Playlist Name :</label>
-                <input name="name" type="text" className="form-control" id="recipient-name" onChange={props.onChange} />
-                <Button onClick={props.onHide} style={{ float: 'right', marginTop: 10 }}>Join</Button>
+                <input name="name" type="text" className="form-control" id="recipient-name" placeholder="HeeHoo" onChange={props.onChange} />
+                <Button onClick={props.onHide} style={{ float: 'right', marginTop: 10 }}>Insert</Button>
                 <Button onClick={() => { props.closemodal(false) }} style={{ float: 'right', marginTop: 10, marginRight: 5 }}>Close</Button>
             </Modal.Body>
         </Modal>

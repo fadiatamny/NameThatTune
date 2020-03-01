@@ -1,24 +1,24 @@
 /* Select Join Room */
 
-.select_join_room {
-    background: url("../images/select_join_room.png") no-repeat;
+.menu {
+    background: url("../images/menu.png") no-repeat;
     background-size: cover;
     padding: 30px 25px;
     min-height: 100vh;
 }
 
-.select_join_room .logo_mini {
+.menu .logo_mini {
     margin-bottom: 35px;
 }
 
-.select_join {
+.menu-area {
     max-width: 475px;
     width: 100%;
     margin: 0 auto;
     min-height: 100px;
 }
 
-.select_join_area {
+.menu-box {
     max-width: 274px;
     margin: 30px auto 0;
     position: relative;
@@ -27,8 +27,7 @@
     top: -15px;
 }
 
-.create_room,
-.join_room {
+.option-select {
     text-align: center;
     margin: 0 0 35px;
     font-size: 24px;
@@ -36,7 +35,7 @@
     overflow: hidden;
 }
 
-.select_join .base_line {
+.menu-area .base_line {
     margin-top: 60px;
 }
 
@@ -63,36 +62,36 @@
 }
 
 @media screen and (max-width:1024px) {
-    .select_join {
+    .menu-area {
         margin-top: 150px;
     }
 }
 
 @media screen and (max-width: 812px) {
-    .select_join{margin-bottom: 20px;}
+    .menu-area{margin-bottom: 20px;}
 }
 
 @media screen and (max-width: 767px) {
-    .select_join_room {
+    .menu {
         padding: 80px 0;
     }
 
-    .select_join_area {
+    .menu-box {
         max-width: 235px;
     }
 
-    .select_join {
+    .menu-area {
         max-width: 385px;
     }
 
-    .create_room,
-    .join_room {
+    
+    .option-select {
         font-size: 20px;
     }
 }
 
 @media screen and (max-width: 736px) {
-    .select_join {
+    .menu-area {
         margin-top: 50px;
     }
 }
