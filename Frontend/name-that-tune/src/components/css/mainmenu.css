@@ -1,0 +1,104 @@
+/* Select Join Room */
+
+.menu {
+    background: url("../images/menu.png") no-repeat;
+    background-size: cover;
+    padding: 30px 25px;
+    min-height: 100vh;
+}
+
+.menu .logo_mini {
+    margin-bottom: 35px;
+}
+
+.menu-area {
+    max-width: 475px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 100px;
+}
+
+.menu-box {
+    max-width: 274px;
+    margin: 30px auto 0;
+    position: relative;
+    border-radius: 10px;
+    padding: 40px 0 30px;
+    top: -15px;
+}
+
+.option-select {
+    text-align: center;
+    margin: 0 0 35px;
+    font-size: 24px;
+    font-family: Montserrat-Bold;
+    overflow: hidden;
+}
+
+.option-select:hover,
+.option-select:active,
+.in-modal:hover,
+.in-modal:active {
+    color: rgb(102, 182, 156);
+}
+
+.menu-area .base_line {
+    margin-top: 60px;
+}
+
+.total_games {
+    overflow: hidden;
+}
+
+.tgame {
+    float: left;
+    text-align: center;
+    font-size: 30px;
+    width: 50%;
+    font-family: Montserrat-Light;
+    padding-top: 20px;
+}
+
+.tgame p {
+    font-size: 14px;
+    margin: 15px 0 0;
+}
+
+.logout:hover{
+    cursor: pointer;
+}
+
+@media screen and (max-width:1024px) {
+    .menu-area {
+        margin-top: 150px;
+    }
+}
+
+@media screen and (max-width: 812px) {
+    .menu-area{margin-bottom: 20px;}
+}
+
+@media screen and (max-width: 767px) {
+    .menu {
+        padding: 80px 0;
+    }
+
+    .menu-box {
+        max-width: 235px;
+    }
+
+    .menu-area {
+        max-width: 385px;
+    }
+
+    
+    .option-select {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 736px) {
+    .menu-area {
+        margin-top: 50px;
+    }
+}

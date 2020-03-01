@@ -1,0 +1,124 @@
+/*Login*/
+
+.login {
+    background: rgba(241, 231, 168, 1);
+    background: -webkit-linear-gradient(left, rgba(241, 231, 168, 1) 0%, rgba(184, 231, 215, 1) 100%);
+    background: -o-linear-gradient(left, rgba(241, 231, 168, 1) 0%, rgba(184, 231, 215, 1) 100%);
+    background: linear-gradient(to right, rgba(241, 231, 168, 1) 0%, rgba(184, 231, 215, 1) 100%);
+    box-sizing: border-box;
+    padding: 100px 0 0 50px;
+    min-height: 100vh;
+}
+
+.welcomeback {
+    font-size: 40px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+
+.login_text {
+    font-size: 48px;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.login_area {
+    margin-bottom: 30px;
+}
+
+.login_area li {
+    position: relative;
+}
+
+.login_area li.username {
+    margin-right: 30px;
+}
+
+
+.login_area li.password {
+    margin-left: 30px;
+}
+
+.btn_login {
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.signup_link,
+.signup_link a {
+    color: #707070;
+}
+
+.signup_link a {
+    text-decoration: underline;
+}
+
+.logo_main {
+    max-width: 350px;
+    float: right;
+}
+
+.logo_mini {
+    max-width: 120px;
+    margin: 0 auto;
+}
+
+
+@media screen and (max-width: 1024px) {
+    .login {
+        padding: 100px 25px;
+    }
+
+    .welcomeback,
+    .login_text {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .hidden-xs {
+        display: none;
+    }
+
+    .back_arrow {
+        left: 15px;
+    }
+
+    .login {
+        padding: 5px 5px 20px !important;
+        background: rgba(241, 231, 168, 1);
+    }
+
+    .logo_main {
+        max-width: 100px;
+        float: none;
+        margin: 40px auto;
+    }
+
+    .btn_login {
+        margin-left: 20px;
+    }
+
+    .welcomeback {
+        font-size: 20px;
+        color: #606060
+    }
+
+    .login_text {
+        font-size: 30px;
+    }
+
+    .welcomeback,
+    .login_text {
+        padding: 0 20px
+    }
+
+    .login_area li.username {
+        margin-right: 20px;
+    }
+
+    .login_area li.password {
+        margin-left: 20px;
+    }
+}

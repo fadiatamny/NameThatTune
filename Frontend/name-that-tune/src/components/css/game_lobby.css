@@ -1,0 +1,111 @@
+/* Game Lobby */
+.back_arrow:hover{
+    cursor: pointer;
+}
+
+.game_loby {
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.game_loby_area {
+    max-width: 330px;
+    margin: 80px auto 0;
+}
+
+.invite_code {
+    margin-bottom: 60px;
+}
+
+.invite_code div {
+    padding: 18px 25px;
+    box-shadow: 7px 15px 30px -12px #999;
+    border-radius: 5%;
+}
+
+.code {
+    text-align: center;
+    font-size: 20px;
+}
+
+.game_loby_area .main_text {
+    font-size: 38px;
+    color: #424242;
+    font-family: Montserrat-Light;
+    margin-bottom: 50px;
+}
+
+.game_loby_area .main_text p {
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 1.5
+}
+
+.game_users {
+    margin-bottom: 80px;
+}
+
+.game_users div {
+    margin: 0 10px;
+    text-align: center;
+}
+
+.game_users div img {
+    margin-bottom: 15px;
+    box-shadow: 0 5px 12px 0 #666;
+    border-radius: 50%;
+}
+
+.game_users div p {
+    font-family: Montserrat-Bold;
+    color: #323232
+}
+
+.start_game {
+    text-align: center;
+}
+
+.chat-box-field{
+    width:60vw;
+    border-radius:15px; 
+    height:10vh;
+    margin-left:20vw; 
+    margin-top:10%;
+}
+
+.chat-box-field input{
+    width: 80%;
+    margin: 15px 0;
+    display: inline-block;
+}
+
+.chat-box-field .send-message{
+    position: relative;
+    cursor: pointer;
+    top: 36%;
+    font-size: 25px;
+    margin-left: 12px;
+}
+
+@media screen and (max-width:1024px) {
+    .game_loby{padding-bottom: 50px;}
+}
+
+@media screen and (max-width:1024px) {
+    .chat-box-field{
+        width: 60vw;
+        margin-left: 20vw;
+    }
+}
+
+@media screen and (max-width:767px) {
+    .chat-box-field{
+        width: 80vw;
+        margin-left: 10%;
+    }
+
+    .chat-box-field input{
+        width: 80%;
+    }
+}

@@ -30,7 +30,7 @@ router.get('/search/:q', (req, res) => {
     });
 });
 
-router.post('/:playlist/insert', Validator.validateSong ,(req, res) => {
+router.post('/:playlist', Validator.validateSong ,(req, res) => {
     playlistController.insert(req,res);
 });
 

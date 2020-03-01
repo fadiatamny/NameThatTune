@@ -5,13 +5,26 @@ const chalk = require('chalk');
 const songsRouter = require('./routers/songsRouter');
 const playlistRouter = require('./routers/playlistRouter');
 const apiRouter = require('./routers/apiRouter');
+const path = require('path');
+const cors = require('cors');
 
 const app = express();
 
+app.use(express.static(path.resolve(__dirname, "build")));
+
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({
     extended: false
 }));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.set('Content-Type', 'application/json');
+  next();
+});
 
 const morganMiddleware = morgan(function (tokens, req, res) {
     return [
@@ -25,12 +38,12 @@ const morganMiddleware = morgan(function (tokens, req, res) {
 
 app.use(morganMiddleware);
 
-app.use('/api',apiRouter);
-app.use('/playlist',playlistRouter);
-app.use('/songs',songsRouter);
+app.use('/api', apiRouter);
+app.use('/playlist', playlistRouter);
+app.use('/songs', songsRouter);
 
-app.all('*', (req, res) => {
-    res.status(404).send('Page Not Found!');
+app.use('*',(req,res,next)=>{
+    res.redirect('/');
 });
 
 app.use((err, req, res, next) => {

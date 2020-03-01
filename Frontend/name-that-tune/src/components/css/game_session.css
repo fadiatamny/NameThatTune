@@ -1,0 +1,134 @@
+/* Guess That Song */
+
+.gues_that_song {
+    padding-top: 100px;
+    min-height: 100vh;
+}
+
+.gues_song {
+    max-width: 300px;
+    margin: 0 auto 35px;
+}
+
+.gues_song .title_page {
+    font-size: 28px;
+    font-family: Montserrat-Light;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    color: #424242
+}
+
+.playButton{
+    color: #fff;
+    position: relative;
+    float: left;
+    bottom: 45px;
+    left: 28px;
+
+}
+
+.songs_area {
+    max-width: 1000px;
+    margin: 0 auto 40px;
+    box-sizing: border-box;
+}
+
+.songs_area a {
+    background: rgba(255, 255, 255, .5);
+    width: 100%;
+    padding: 45px 0;
+    margin: 0 15px;
+    text-align: center;
+    height: 150px;
+    text-transform: uppercase;
+    border-radius: 10px;
+}
+
+.songs_area a:hover,
+.songs_area a:focus,
+.songs_area a.active_song {
+    background: rgba(255, 195, 161, 1);
+    background: -moz-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    background: linear-gradient(90deg, rgba(255, 195, 161, 1) 0%, rgba(255, 175, 188, 1) 100%);
+    box-shadow: 0 10px 30px -13px #888;
+    text-decoration: none;
+}
+
+.songs_area a i {
+    margin-bottom: 10px;
+    visibility: hidden;
+}
+
+.songs_area a:hover i,
+.songs_area a:focus i {
+    visibility: initial;
+    text-decoration: none;
+
+}
+
+.submit_song {
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+@media screen and (max-width: 1024px) {
+    .gues_that_song {
+        padding-top: 200px;
+        padding-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+
+    .songs_area .left_side {
+        width: 100%;
+    }
+
+    .songs_area .right_side {
+        width: 100%;
+    }
+
+    .songs_area .left_side .left_side li,
+    .songs_area .left_side .right_side li {
+        float: left;
+    }
+
+    .songs_area .left_side .list_songs li {
+        width: 31%;
+        margin-right: 14px;
+    }
+
+    .songs_area .left_side .list_songs li:nth-child(3n) {
+        margin-left: 0;
+    }
+
+    .submit_song {
+        width: 90%;
+        max-width: 100%;
+        margin: 0 auto 50px;
+    }
+}
+
+@media screen and (max-width:568px) {
+    .songs_area .left_side .list_songs li {
+        margin-right: 12px;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    .songs_area .left_side .list_songs li {
+        width: 30%;
+        margin-right: 8px;
+    }
+}
+
+@media screen and (max-width: 345px) {
+    .songs_area .left_side .list_songs li {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+}
