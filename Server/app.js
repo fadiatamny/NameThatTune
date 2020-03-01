@@ -42,12 +42,8 @@ app.use('/api', apiRouter);
 app.use('/playlist', playlistRouter);
 app.use('/songs', songsRouter);
 
-app.use('/',(req,res,next)=>{
-    res.sendFile(path.join(__dirname,'HTML','index.html'));
-});
-
-app.all('*', (req, res) => {
-    res.status(404).send('Page Not Found!');
+app.use('*',(req,res,next)=>{
+    res.redirect('/');
 });
 
 app.use((err, req, res, next) => {

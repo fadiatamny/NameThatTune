@@ -2,15 +2,22 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./fonts/fontawesome/css/font-awesome.min.css";
 import { Media, Player } from 'react-media-player';
-import "./css/guess_song.css";
+import "./css/game_session.css";
 import "./css/game_lobby.css";
 import CustomControlls from './CustomControlls';
 import _ from 'lodash';
+import { FaLocationArrow } from 'react-icons/fa';
 
 const GameSession = (props) => {
 
   const song = JSON.parse(sessionStorage.getItem('song'));
   const url = `http://www.youtube.com/embed/${song.vid}?autoplay=1`;
+
+  let message = '';
+
+  const sendMessage = () => {
+    props.socket.emit('sendMessage', sessionStorage.getItem('room'), sessionStorage.getItem('username'), message);
+  };
 
   return (
     <div className="gues_that_song greenshade">
@@ -49,11 +56,17 @@ const GameSession = (props) => {
                 }}>
                   <i className="fa fa-heart-o"></i>
                   <br />
-                  {item}
+                  {item.length > 20 ? item.slice(0,20) : item+'...'}
                 </a>
               ))
             }
           </div>
+        </div>
+      </div>
+      <div>
+        <div className="chat-box-field d-flex blueshade justify-content-center">
+          <input name="name" type="text" className="form-control" id="recipient-name" placeholder="Message..." onChange={e => message = e.target.value} />
+          <FaLocationArrow className="send-message" onClick={sendMessage} />
         </div>
       </div>
     </div>

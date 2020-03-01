@@ -35,6 +35,13 @@
     overflow: hidden;
 }
 
+.option-select:hover,
+.option-select:active,
+.in-modal:hover,
+.in-modal:active {
+    color: rgb(102, 182, 156);
+}
+
 .menu-area .base_line {
     margin-top: 60px;
 }

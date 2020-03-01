@@ -27,7 +27,7 @@ const Dashboard = (props) => {
             props.history.push('/');
         }
         else {
-            Axios.get(`${localhostplace}/playlist/`)
+            Axios.get(`${endpoint}/playlist/`)
                 .then(res => setPlaylists(res.data))
                 .catch(err => console.log(err));
         }
@@ -40,7 +40,7 @@ const Dashboard = (props) => {
 
     const refresh = async () => {
         try {
-            let res = await Axios.get(`${localhostplace}/playlist/`);
+            let res = await Axios.get(`${endpoint}/playlist/`);
             setPlaylists(res.data);
             setSelectedPlaylist({});
         } catch (err) {
@@ -52,7 +52,7 @@ const Dashboard = (props) => {
         if (isNaN(playlist.id)) return;
 
         try {
-            await Axios.post(`${localhostplace}/playlist`, playlist);
+            await Axios.post(`${endpoint}/playlist`, playlist);
             refresh();
         } catch (err) {
             console.log(err);
@@ -65,7 +65,7 @@ const Dashboard = (props) => {
 
     const deletePlaylist = async (id) => {
         try {
-            await Axios.delete(`${localhostplace}/playlist/${id}`);
+            await Axios.delete(`${endpoint}/playlist/${id}`);
             refresh();
         } catch (err) {
             console.log(err);

@@ -15,13 +15,13 @@ const GameLobby = (props) => {
     list = props.players;
 
   let message = '';
-  
+
   const sendMessage = () => {
-    props.socket.emit('sendMessage',sessionStorage.getItem('room'),sessionStorage.getItem('username'),message);
+    props.socket.emit('sendMessage', sessionStorage.getItem('room'), sessionStorage.getItem('username'), message);
   };
 
   const refresh = () => { window.location.reload(); };
-  
+
   return (
     <div className="game_loby greenshade">
       <div to="./MainMenu" onClick={props.leaveLobby} className="back_arrow">
@@ -54,8 +54,8 @@ const GameLobby = (props) => {
       </div>
       <div>
         <div className="chat-box-field d-flex blueshade justify-content-center">
-          <input name="name" type="text" className="form-control" id="recipient-name" onChange={e => message = e.target.value} />
-          <FaLocationArrow className="send-message" style={{fontSize:25,marginLeft:10, marginTop: '8%'}} onClick={sendMessage}/>
+          <input name="name" type="text" className="form-control" id="recipient-name" placeholder="Message..." onChange={e => message = e.target.value} />
+          <FaLocationArrow className="send-message" onClick={sendMessage} />
         </div>
       </div>
     </div>

@@ -33,7 +33,7 @@ const Signup = (props) => {
   const submitForm = async (e) => {
     e.preventDefault();
     try {
-      await Axios.post(`${localhostplace}/api/signup`, {
+      await Axios.post(`${endpoint}/api/signup`, {
         "id": userName,
         "password": sha256(password)
       });

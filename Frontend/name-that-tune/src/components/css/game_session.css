@@ -74,13 +74,6 @@
     position: relative;
 }
 
-.submit_song img {
-    max-width: 40px;
-    position: absolute;
-    top: 13px;
-    right: 15px;
-}
-
 @media screen and (max-width: 1024px) {
     .gues_that_song {
         padding-top: 200px;

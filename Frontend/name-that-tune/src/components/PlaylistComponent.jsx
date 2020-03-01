@@ -19,7 +19,7 @@ const PlaylistComponent = (props) => {
 
     const deletePlaylist = async () => {
         try {
-            await Axios.delete(`${localhostplace}/playlist/${props.playlist.id}`);
+            await Axios.delete(`${endpoint}/playlist/${props.playlist.id}`);
             props.refresh();
         } catch (err) {
             console.log(err);
@@ -28,7 +28,7 @@ const PlaylistComponent = (props) => {
 
     const insertSong = async () => {
         try {
-            await Axios.post(`${localhostplace}/songs/${props.playlist.id}`, song);
+            await Axios.post(`${endpoint}/songs/${props.playlist.id}`, song);
             props.refresh();
         } catch (err) {
             console.log(err);
@@ -45,7 +45,7 @@ const PlaylistComponent = (props) => {
         let obj = props.playlist;
         obj.songs = props.playlist.songs.filter(item => item.vid !== data.vid);
         try {
-            await Axios.put(`${localhostplace}/playlist/${obj.id}`, obj);
+            await Axios.put(`${endpoint}/playlist/${obj.id}`, obj);
             props.refresh();
         } catch (err) {
             console.log(err);
@@ -132,7 +132,7 @@ function ChoseSongModal(props) {
 
     const getChoices = async () => {
         try {
-            let res = await Axios.get(`${localhostplace}/songs/search/${query}`);
+            let res = await Axios.get(`${endpoint}/songs/search/${query}`);
             setChoices(res.data);
         } catch (err) {
             console.log(err);

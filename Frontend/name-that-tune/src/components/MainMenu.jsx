@@ -94,7 +94,7 @@ function MainModal(props) {
     >
       <Modal.Body className="orangeshade">
         <label htmlFor="recipient-name" className="col-form-label">Room ID :</label>
-        <input type="text" className="form-control" id="recipient-name" onChange={props.onChange} />
+        <input type="text" className="form-control" id="recipient-name" placeholder="Th1s1sMyr00mK3y" onChange={props.onChange} />
         <Button onClick={props.onHide} style={{ float: 'right', marginTop: 10 }}>Join</Button>
         <Button onClick={() => { props.closemodal(false) }} style={{ float: 'right', marginTop: 10, marginRight: 5 }}>Close</Button>
       </Modal.Body>
@@ -106,7 +106,7 @@ function ChoiceModal(props) {
   const [playlist, setPlaylist] = React.useState([]);
 
   React.useEffect(() => {
-    Axios.get(`${localhostplace}/playlist`)
+    Axios.get(`${endpoint}/playlist`)
       .then(res => setPlaylist(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -120,7 +120,7 @@ function ChoiceModal(props) {
     >
       <Modal.Body className="orangeshade">
         {playlist.length != 0 ? playlist.map((item, index) => (
-          <div key={index} style={{ cursor: 'pointer' }} onClick={() => { props.selectPlaylist(item.id); props.closemodal(false); }}>
+          <div class="in-modal" key={index} style={{ cursor: 'pointer' }} onClick={() => { props.selectPlaylist(item.id); props.closemodal(false); }}>
             <hr />
             <p style={{ fontSize: 24, margin: '10px 0px' }}>{item.name}</p>
             <p style={{ fontSize: 16, margin: '10px 5px' }}>Song Count: {item.songs.length}</p>

@@ -9,7 +9,7 @@ import { NotificationManager } from 'react-notifications';
 const localhostplace = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
 
-const socket = io.connect(localhostplace);
+const socket = io.connect(endpoint);
 let owner = JSON.parse(sessionStorage.getItem('Owner'));
 let propss;
 let roomID;
@@ -62,6 +62,7 @@ socket.on('gameEnded', () => {
     count = 0;
     CacheHandler.removeCache('song');
     CacheHandler.removeCache('options');
+    NotificationManager.info('System Message', `Game Session Ended !`, 2000);
     propss.history.push('/MainMenu');
 });
 
