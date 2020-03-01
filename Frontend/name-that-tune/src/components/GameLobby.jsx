@@ -24,7 +24,7 @@ const GameLobby = (props) => {
 
   return (
     <div className="game_loby greenshade">
-      <div to="./MainMenu" onClick={props.leaveLobby} className="back_arrow">
+      <div onClick={props.leaveLobby} className="back_arrow">
         <i className="fa fa-long-arrow-left"></i>
       </div>
 

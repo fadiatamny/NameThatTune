@@ -21,9 +21,12 @@ const MainMenu = (props) => {
   React.useEffect(() => {
     if (!CacheHandler.verifyCache('logged-in') || CacheHandler.verifyCache('Admin'))
       props.history.push('/');
+    else
+      NotificationManager.info('System Message', `Welcome !`, 1000);
   }, []);
 
   const logOut = () => {
+    NotificationManager.info('System Message', `Goodbye !`, 1000);
     CacheHandler.clearCache();
     props.history.push('/');
   };
