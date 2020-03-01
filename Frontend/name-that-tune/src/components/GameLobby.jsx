@@ -6,7 +6,6 @@ import "./css/game_lobby.css";
 import "./css/responsive.css";
 import { FaLocationArrow } from 'react-icons/fa';
 
-
 const GameLobby = (props) => {
   let list = JSON.parse(sessionStorage.getItem('playerlist'));
   if (list)

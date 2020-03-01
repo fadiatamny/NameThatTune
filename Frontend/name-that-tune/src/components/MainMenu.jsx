@@ -8,6 +8,7 @@ import "./css/responsive.css";
 import CacheHandler from './interfaces/CacheHandler';
 import { Modal, Button } from 'react-bootstrap';
 import Axios from 'axios';
+import { NotificationManager } from 'react-notifications';
 
 const localhostplace = 'http://localhost:1337';
 const endpoint = 'https://name-that-tune-2020.herokuapp.com';
