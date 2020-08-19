@@ -33,7 +33,7 @@ const Login = (props) => {
       CacheHandler.setCache('logged-in', true);
       CacheHandler.setCache('username', userName);
 
-      if (userName === 'admin') {
+      if (userName.toLowerCase() === 'admin') {
         CacheHandler.setCache('Admin', true);
         props.history.push('/Dashboard');
       } else {

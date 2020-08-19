@@ -120,8 +120,8 @@ function MainModal(props) {
                 <input name='name' type="text" className="form-control" placeholder="HeeHoo" id="recipient-name" onChange={props.onChange} />
                 <label htmlFor="recipient-id" className="col-form-label">VideoID:</label>
                 <input name='id' type="text" className="form-control" placeholder="1234" id="recipient-id" onChange={props.onChange} />
-                <Button onClick={props.onHide} style={{ float: 'right', marginTop: 10 }}>Join</Button>
-                <Button onClick={() => { props.closemodal(false) }} style={{ float: 'right', marginTop: 10, marginRight: 5 }}>Close</Button>
+                <Button onClick={() => { props.closemodal(false) }} style={{ float: 'right', marginTop: 10 }}>Close</Button>
+                <Button onClick={props.onHide} style={{ float: 'right', marginTop: 10, marginRight: 5 }}>Insert</Button>
             </Modal.Body>
         </Modal>
     );
